@@ -1,7 +1,7 @@
 <?php
 
 class Config {
-	private $settings = [];
+	private static $settings = [];
 
 	public static function get($key) {
 		return (self::$settings[$key]);
