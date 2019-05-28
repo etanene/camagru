@@ -5,8 +5,7 @@ class Controller {
 	private $model;
 	private $params;
 
-	public function __construct($data) {
-		$this->data = $data;
+	public function __construct() {
 		$this->params = App::getRouter()->getParams();
 	}
 }

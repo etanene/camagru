@@ -2,8 +2,8 @@
 
 class Router {
 	private $uri;
-	private $controller;
-	private $action;
+	private $controller = 'Main';
+	private $action = 'index';
 	private $params = [];
 
 	public function __construct($uri) {
