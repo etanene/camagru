@@ -15,9 +15,13 @@ class App {
 
 		$controller = new $controller_class();
 		if (method_exists($controller, $controller_method)) {
-			$controller->$controller_method();
+			$view_path = $controller->$controller_method();
+			$view = new View($controller->getData(), $view_path);
+			$content = $view->render();
 		} else {
 			throw new Exception('Method' . $controller_method . 'of class' . $controller_class . 'does not exist');
 		}
+		$layout = new View(compact('content'), ROOT . '/views/layout.php');
+		echo $layout->render();
 	}
 }

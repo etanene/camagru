@@ -1,3 +1,3 @@
 <?php
 
-Config::set('site_name', 'My site name');
+Config::set('title', 'Camagru');

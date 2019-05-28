@@ -2,6 +2,10 @@
 
 class MainController extends Controller {
 	public function index() {
-		echo "Hello" . PHP_EOL;
+		$this->data['content'] = 'index';
+	}
+
+	public function login() {
+		$this->data['content'] = 'login';
 	}
 }

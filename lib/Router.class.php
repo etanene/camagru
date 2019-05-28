@@ -2,13 +2,11 @@
 
 class Router {
 	private $uri;
-	private $controller = 'Main';
+	private $controller = 'main';
 	private $action = 'index';
 	private $params = [];
 
 	public function __construct($uri) {
-		echo 'Uri: ' . $uri . PHP_EOL;
-
 		$this->uri = trim($uri, '/');
 
 		$uri_parts = explode('/', $this->uri);
