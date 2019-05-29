@@ -3,16 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title><?= Config::get('title') ?></title>
+	<link rel="stylesheet" href="/public/css/layout.css" />
 </head>
 <body>
-	<div class="header">
-		<h3>HEADER</h3>
+	<div class="left-part">
+		<div class="sidebar">
+			SIDE
+		</div>
+		<div class="footer">
+			FOOTER
+		</div>
 	</div>
-	<div class="main">
-		<?= $data['content'] ?>
-	</div>
-	<div class="footer">
-		<h3>FOOTER</h3>
+	<div class="right-part">
+		<div class="header">
+			HEADER
+		</div>
+		<div class="main">
+			<?= $data['content'] ?>
+		</div>
 	</div>
 </body>
 </html>
