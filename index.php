@@ -2,6 +2,6 @@
 
 define('ROOT', __DIR__);
 
-require_once('./lib/init.php');
+require_once( ROOT . '/lib/init.php');
 
 App::run($_SERVER['REQUEST_URI']);
