@@ -1,10 +1,15 @@
 <?php
 
 class DB {
-    private $dbh;
+    private $db;
 
     public function __construct($dsn, $user, $passwd) {
-        $this->dbh = new PDO($dsn, $user, $passwd);
-        echo "OK connect db" . PHP_EOL;
+        $this->db = new PDO($dsn, $user, $passwd);
+    }
+
+    public function query($sql) {
+        $result = $this->db->prepare($sql);
+        $result->execute();
+        return ($result->fetchAll());
     }
 }

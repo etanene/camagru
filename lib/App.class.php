@@ -2,6 +2,7 @@
 
 class App {
 	private static $router;
+	public static $db;
 
 	public static function getRouter() {
 		return (self::$router);
@@ -9,6 +10,7 @@ class App {
 
 	public static function run($uri) {
 		self::$router = new Router($uri);
+		self::$db = new Db(Config::get('db_dsn'), Config::get('db_user'), Config::get('db_passwd'));
 
 		$controller_class = ucfirst(self::$router->getController()) . 'Controller';
 		$controller_method = self::$router->getAction();
