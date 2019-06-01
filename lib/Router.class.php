@@ -23,6 +23,10 @@ class Router {
 		}
 	}
 
+	public function redirect($location) {
+		header("Location: $location");
+	}
+
 	public function getController() {
 		return ($this->controller);
 	}

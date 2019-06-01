@@ -6,21 +6,14 @@
 	<link rel="stylesheet" href="/public/css/layout.css" />
 </head>
 <body>
-	<div class="left-part">
-		<div class="sidebar">
-			SIDE
-		</div>
-		<div class="footer">
-			FOOTER
-		</div>
+	<div class="header">
+		HEADER
 	</div>
-	<div class="right-part">
-		<div class="header">
-			HEADER
-		</div>
-		<div class="main">
-			<?= $data['content'] ?>
-		</div>
+	<div class="main">
+		<?= $data['content'] ?>
+	</div>
+	<div class="footer">
+		FOOTER
 	</div>
 </body>
 </html>

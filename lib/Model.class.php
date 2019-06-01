@@ -3,7 +3,7 @@
 class Model {
     protected $db;
 
-    public function __construc() {
+    public function __construct() {
         $this->db = App::$db;
     }
 }

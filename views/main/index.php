@@ -1,3 +1,5 @@
-This is index
-
-<?= $data['content'] ?>
+<?php  foreach ($data['users'] as $user) { ?>
+    <div class="block">
+        <?= $user['login'] ?>
+    </div>
+<?php } ?>

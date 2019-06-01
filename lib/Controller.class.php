@@ -2,7 +2,7 @@
 
 class Controller {
 	protected $data;
-	private $model;
+	protected $model;
 	private $params;
 
 	public function __construct() {

@@ -1,11 +1,12 @@
 <?php
 
 class MainController extends Controller {
-	public function index() {
-		$this->data['content'] = 'index';
+
+	public function __construct() {
+		$this->model = new User();
 	}
 
-	public function login() {
-		$this->data['content'] = 'login';
+	public function index() {
+		$this->data['users'] = $this->model->getUsers();
 	}
 }
