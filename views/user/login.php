@@ -4,7 +4,7 @@
             <input type="text" name="login" class="input" placeholder="LOGIN" />
         </div>
         <div>
-            <input type="password" name="passwd" class="input" placeholder="PASSWORD" />
+            <input type="password" name="password" class="input" placeholder="PASSWORD" />
         </div>
         <div id="form-buttons">
             <input type="submit" value="Log in" id="login-button" />

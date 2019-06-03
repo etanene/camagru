@@ -13,7 +13,7 @@ class DB {
 
         if (!empty($params)) {
             foreach($params as $key => $value) {
-                $this->db->bindValue(':' . $key, $value);
+                $result->bindValue(':' . $key, $value);
             }
         }
 

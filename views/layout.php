@@ -8,6 +8,9 @@
 <body>
 	<div class="header">
 		HEADER
+		<?php if (Session::get('logged')) { ?>
+			<a href="/user/logout">Logout</a>
+		<?php } ?>
 	</div>
 	<div class="main">
 		<?= $data['content'] ?>

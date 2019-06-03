@@ -7,6 +7,6 @@ class MainController extends Controller {
 	}
 
 	public function index() {
-		$this->data['users'] = $this->model->getUsers();
+		$this->data['users'] = $this->model->getAllUsers();
 	}
 }
