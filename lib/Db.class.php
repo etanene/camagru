@@ -18,7 +18,12 @@ class DB {
         }
 
         if ($result->execute()) {
-            return ($result->fetchAll(PDO::FETCH_ASSOC));
+            $arr = $result->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($arr)) {
+                return (null);
+            } else {
+                return ($arr);
+            }
         } else {
             return (null);
         }
