@@ -17,15 +17,7 @@ class DB {
             }
         }
 
-        if ($result->execute()) {
-            $arr = $result->fetchAll(PDO::FETCH_ASSOC);
-            if (empty($arr)) {
-                return (null);
-            } else {
-                return ($arr);
-            }
-        } else {
-            return (null);
-        }
+        $result->execute();
+        return ($result);
     }
 }

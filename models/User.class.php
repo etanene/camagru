@@ -2,8 +2,8 @@
 
 class User extends Model {
     public function getAllUsers() {
-        $result = $this->db->query('SELECT `login` FROM `users`');
-        return ($result);
+        $result = $this->db->query('SELECT `login` FROM `users`')->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result);
     }
 
     public function getUserByLogin($login) {
@@ -15,8 +15,8 @@ class User extends Model {
             'login' => $login
         ];
         
-        $result = $this->db->query($sql, $params);
-        return (isset($result) ? $result[0] : null);
+        $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result[0]);
     }
 
     public function getUserByEmail($email) {
@@ -28,8 +28,8 @@ class User extends Model {
             'email' => $email
         ];
 
-        $result = $this->db->query($sql, $params);
-        return (isset($result) ? $result[0] : null);
+        $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result[0]);
     }
 
     public function addUser($login, $password, $email) {
