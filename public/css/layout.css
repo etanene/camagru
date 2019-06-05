@@ -13,12 +13,23 @@ body {
 
 .main {
 	display: flex;
-	align-items: center;
+	/* flex-direction: row; */
+	align-items: flex-start;
 	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .block {
 	background-color: rgba(207, 212, 214);
+	border-radius: 5px;
+}
+
+.images {
+	margin: 8px;
+}
+
+.images img{
+	width: 300px;
 	border-radius: 5px;
 }
 

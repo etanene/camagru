@@ -2,7 +2,10 @@
 
 class User extends Model {
     public function getAllUsers() {
-        $result = $this->db->query('SELECT `login` FROM `users`')->fetchAll(PDO::FETCH_ASSOC);
+        $sql = 'SELECT `login`
+                FROM `users`;';
+
+        $result = $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         return (empty($result) ? null : $result);
     }
 

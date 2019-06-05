@@ -9,7 +9,8 @@ class Router {
 	public function __construct($uri) {
 		$this->uri = trim($uri, '/');
 
-		$uri_parts = explode('/', $this->uri);
+		$uri_parts = explode('?', $this->uri);
+		$uri_parts = explode('/', $uri_parts[0]);
 		if (current($uri_parts)) {
 			$this->controller = current($uri_parts);
 			next($uri_parts);

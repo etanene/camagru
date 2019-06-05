@@ -1,14 +1,4 @@
-<form id="uploadForm">
-    <input type="file" id="userfile" />
+<form enctype="multipart/form-data" id="uploadForm" method="POST" >
+    <input type="file" name="image" id="userfile" />
     <input type="submit" name="submit" value="Upload" />
 </form>
-<script>
-    uploadForm.onsubmit = async (event) => {
-        event.preventDefault();
-        let blob = await new Promise((resolve) => userfile.toBlob(resolve));
-        let response = await fetch('/image/add', {
-            method: 'POST',
-            data: blob
-        });
-    }
-</script>

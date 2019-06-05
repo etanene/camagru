@@ -8,7 +8,7 @@ class UserController extends Controller {
     public function login() {
         if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
             $user = $this->model->getUserByLogin($_POST['login']);
-            if (isset($user) && $user['password'] === $_POST['password']) {
+            if (isset($user) && password_verify($_POST['password'], $user['password'])) {
                 Session::set('logged', $user['login']);
             }
             App::redirect('/');
@@ -21,7 +21,7 @@ class UserController extends Controller {
                 $checkEmail = $this->model->getUserByEmail($_POST['email']);
                 if (isset($checkLogin) || isset($checkEmail)) {
                     App::redirect('/');
-                    return ;
+                    exit();
                 }
                 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 $this->model->addUser($_POST['login'], $hash, $_POST['email']);

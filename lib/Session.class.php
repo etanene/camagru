@@ -19,4 +19,11 @@ class Session {
         session_destroy();
         App::redirect('/user/login');
     }
+
+    // public static function checkLogin() {
+    //     if (self::get('logged')) {
+    //         return (true);
+    //     }
+    //     return (false);
+    // }
 }

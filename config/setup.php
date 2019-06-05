@@ -12,12 +12,19 @@ try {
     echo 'Database ' . $DB_NAME . ' created' . PHP_EOL;
     $sql = 'CREATE TABLE IF NOT EXISTS ' . $DB_NAME . '.users (
         `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        `login` VARCHAR(8) NOT NULL,
+        `login` VARCHAR(16) NOT NULL,
         `email` VARCHAR(32) NOT NULL,
-        `password` VARCHAR(32) NOT NULL
+        `password` VARCHAR(255) NOT NULL
     );';
     $dbh->exec($sql);
     echo 'Table users created' . PHP_EOL;
+    $sql = 'CREATE TABLE IF NOT EXISTS ' . $DB_NAME . '.images (
+        `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `image` VARCHAR(64) NOT NULL,
+        `loginId` INT UNSIGNED NOT NULL
+    );';
+    $dbh->exec($sql);
+    echo 'Table images created' . PHP_EOL;
 } catch (PDOException $e) {
     echo 'Error!: ' . $e->getMessage() . PHP_EOL;
 }
