@@ -3,7 +3,7 @@
 class Controller {
 	protected $data;
 	protected $model;
-	private $params;
+	protected $params;
 
 	public function __construct() {
 		$this->params = App::getRouter()->getParams();

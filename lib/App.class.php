@@ -15,10 +15,6 @@ class App {
 		$controller_class = ucfirst(self::$router->getController()) . 'Controller';
 		$controller_method = self::$router->getAction();
 
-		// if (Session::get('logged') === null && $controller_method !== 'login' && $controller_method !== 'register') {
-		// 	App::redirect('/user/login');
-		// }
-
 		$controller = new $controller_class();
 		if (method_exists($controller, $controller_method)) {
 			$view_path = $controller->$controller_method();

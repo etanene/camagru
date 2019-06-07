@@ -25,6 +25,14 @@ try {
     );';
     $dbh->exec($sql);
     echo 'Table images created' . PHP_EOL;
+    $sql = 'CREATE TABLE IF NOT EXISTS ' . $DB_NAME . '.comments (
+        `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `text` VARCHAR(255) NOT NULL,
+        `imageId` INT UNSIGNED NOT NULL,
+        `userId` INT UNSIGNED NOT NULL,
+        `createdDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );';
+    $dbh->exec($sql);
 } catch (PDOException $e) {
     echo 'Error!: ' . $e->getMessage() . PHP_EOL;
 }

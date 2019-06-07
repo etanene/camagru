@@ -2,8 +2,10 @@
 
 class Image extends Model {
     public function getAllImages() {
-        $sql = 'SELECT `image`
-                FROM `images`;';
+        $sql = 'SELECT `image`, `login` as `user`
+                FROM `images`
+                INNER JOIN `users`
+                    ON `images`.`loginId` = `users`.`id`;';
 
         $result = $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         return (empty($result) ? null : $result);

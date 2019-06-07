@@ -1,12 +1,19 @@
 <?php
 
 class ImageController extends Controller {
+
+    private $comments;
+    
     public function __construct() {
+        parent::__construct();
         $this->model = new Image();
+        $this->comments = new Comment();
     }
 
     public function show() {
-        $this->data['images'] = $this->model->getAllImages();
+        $this->data['author'] = $this->params[0];
+        $this->data['name'] = $this->params[1];
+        $this->data['comments'] = $this->comments->getCommentsByImage($this->params[1]);
     }
 
     public function add() {
