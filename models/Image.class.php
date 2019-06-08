@@ -1,6 +1,22 @@
 <?php
 
 class Image extends Model {
+
+    public function getImageByName($name) {
+        $sql = 'SELECT `image`, `login` as `user`
+                FROM `images`
+                INNER JOIN `users`
+                    ON `images`.`loginId` = `users`.`id`
+                WHERE `images`.`image` = :name;';
+        
+        $params = [
+            'name' => $name
+        ];
+
+        $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result[0]);
+    }
+
     public function getAllImages() {
         $sql = 'SELECT `image`, `login` as `user`
                 FROM `images`

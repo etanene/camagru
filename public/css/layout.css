@@ -33,6 +33,18 @@ body {
 	border-radius: 5px;
 }
 
+.card {
+}
+
+.card img {
+	width: 350px;
+}
+
+.comment {
+	background-color: rgba(207, 212, 214);
+	margin: 3px;
+}
+
 #form-buttons {
 	display: flex;
 	justify-content: space-between;

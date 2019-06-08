@@ -23,8 +23,7 @@ class ImageController extends Controller {
         }
         if ($_FILES) {
             $dir = ROOT . '/public/img/';
-            $extension = explode('.', $_FILES['image']['name']);
-            $filename = uniqid() . '.' . $extension[count($extension) - 1];
+            $filename = uniqid();
             move_uploaded_file($_FILES['image']['tmp_name'], $dir . $filename);
             $this->model->addImage($filename, Session::get('logged'));
         }

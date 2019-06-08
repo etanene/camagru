@@ -33,6 +33,14 @@ try {
         `createdDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );';
     $dbh->exec($sql);
+    echo 'Table comments created' . PHP_EOL;
+    $sql = 'CREATE TABLE IF NOT EXISTS ' . $DB_NAME . '.likes (
+        `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `imageId` INT UNSIGNED NOT NULL,
+        `userId` INT UNSIGNED NOT NULL
+    );';
+    $dbh->exec($sql);
+    echo 'Table likes created' . PHP_EOL;
 } catch (PDOException $e) {
     echo 'Error!: ' . $e->getMessage() . PHP_EOL;
 }
