@@ -3,16 +3,19 @@
 class ImageController extends Controller {
 
     private $comments;
+    private $likes;
     
     public function __construct() {
         parent::__construct();
         $this->model = new Image();
         $this->comments = new Comment();
+        $this->likes = new Like();
     }
 
     public function show() {
         $this->data['author'] = $this->params[0];
         $this->data['name'] = $this->params[1];
+        $this->data['likes'] = $this->likes->getLikesCountByImage($this->params[1]);
         $this->data['comments'] = $this->comments->getCommentsByImage($this->params[1]);
     }
 

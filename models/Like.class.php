@@ -13,7 +13,8 @@ class Like extends Model {
             'image' => $image
         ];
 
-        $result = $this->db->query();
+        $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result[0]);
     }
 
     public function getLikesUsersByImage($image) {
@@ -31,6 +32,23 @@ class Like extends Model {
 
         $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
         return (empty($result) ? null : $result);
+    }
+
+    public function delLikeFromImage($image, $user) {
+        $sql = 'DELETE
+                FROM `likes`
+                INNER JOIN `users`
+                    ON `likes`.`userId` = `users`.`id`
+                INNER JOIN `images`
+                    ON `likes`.`imageId` = `images`.`id`
+                WHERE `images`.`image` = :image AND `users`.`login` = :user;';
+        
+        $params = [
+            'image' => $image,
+            'user' => $user
+        ];
+        
+        return ($this->db->query($sql, $params));
     }
 
     public function addLikeToImage($image, $user) {
