@@ -2,7 +2,9 @@
     <img src="http://localhost:8080/public/img/<?= $data['name'] ?>" alt="image1">
     <div>
         Likes: <?= $data['likes']['countLikes'] ?>
-        <form action="/like/submit">
+        <form action="/like/submit" method="post">
+            <input type="hidden" name="user" value="<?= Session::get('logged') ?>" />
+            <input type="hidden" name="image" value="<?= $data['name'] ?>" />
             <input type="submit" value="Like" />
         </form>
     </div>
