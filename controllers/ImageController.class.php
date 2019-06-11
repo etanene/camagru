@@ -25,7 +25,7 @@ class ImageController extends Controller {
             exit();
         }
         if ($_FILES) {
-            $dir = ROOT . '/public/img/';
+            $dir = ROOT . '/public/img/photo/';
             $filename = uniqid();
             move_uploaded_file($_FILES['image']['tmp_name'], $dir . $filename);
             $this->model->addImage($filename, Session::get('logged'));

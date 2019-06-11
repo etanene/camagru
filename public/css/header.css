@@ -1,0 +1,60 @@
+#logo {
+    font-size: 28px;
+}
+
+#logo a {
+    color: black;
+    text-decoration: none;
+}
+
+#search {
+    position: relative;
+}
+
+#search input {
+    background-color: #fafafa;
+    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 5px 5px 5px 25px;
+    outline: none;
+}
+
+#search #icon {
+    background-image: url('http://localhost:8080/public/img/icon/search.svg');
+    background-size: contain;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 7px;
+    right: 25px;
+}
+
+#user-nav {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    /* width: 200px; */
+}
+
+.icon-nav {
+    width: 25px;
+    height: 25px;
+    margin: 7px;
+}
+
+#user-nav #profile {
+    background-image: url('http://localhost:8080/public/img/icon/profile.svg');
+}
+
+#user-nav #login {
+    background-image: url('http://localhost:8080/public/img/icon/profile.svg');
+}
+
+#user-nav #settings {
+    background-image: url('http://localhost:8080/public/img/icon/settings2.svg');
+}
+
+#user-nav #logout {
+    background-image: url('http://localhost:8080/public/img/icon/logout2.svg');
+}

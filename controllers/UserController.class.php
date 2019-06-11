@@ -26,7 +26,7 @@ class UserController extends Controller {
                 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 $this->model->addUser($_POST['login'], $hash, $_POST['email']);
                 Session::set('logged', $_POST['login']);
-                App::redirect('/user/login');
+                App::redirect('/');
         }
     }
 

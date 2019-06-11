@@ -1,5 +1,5 @@
 <div class="card">
-    <img src="http://localhost:8080/public/img/<?= $data['name'] ?>" alt="image1">
+    <img src="http://localhost:8080/public/img/photo/<?= $data['name'] ?>" alt="image1">
     <div>
         Likes: <?= $data['likes']['countLikes'] ?>
         <form action="/like/submit" method="post">

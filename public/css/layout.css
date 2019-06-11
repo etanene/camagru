@@ -1,14 +1,32 @@
+@import 'header.css';
+@import 'main.css';
+
 body {
 	margin: 0;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
-	/* justify-content: space-between; */
 }
 
 .header {
+	background-color: white;
 	height: 80px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	position: sticky;
+	top: 0;
+}
+
+.main {
+	background-color: #fafafa;
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* align-content: center; */
+	/* flex-wrap: wrap; */
 }
 
 .footer {
@@ -17,16 +35,7 @@ body {
 	border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.main {
-	background-color: #fafafa;
-	flex-grow: 1;
-	/* min-height: 100%; */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-}
-
+/* 
 .block {
 	background-color: rgba(207, 212, 214);
 	border-radius: 5px;
@@ -40,8 +49,8 @@ body {
 	height: 300px;
 	width: 300px;
 	object-fit: cover;
-	/* width: 300px; */
-	/* border-radius: 5px; */
+	width: 300px;
+	border-radius: 5px;
 }
 
 .card {
@@ -94,3 +103,4 @@ input {
 	font-size: 16px;
 	margin: 5px;
 }
+*/
