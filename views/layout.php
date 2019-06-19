@@ -13,6 +13,7 @@
 		<div id="search">
 			<input type="search" placeholder="Search..." />
 			<span id="icon"></span>
+			<a id="take-pic" href="/image/add/">Take a picture</a>
 		</div>
 		<div id="user-nav">
 			<?php if (Session::get('logged')) { ?>
@@ -37,6 +38,7 @@
 		<?= $data['content'] ?>
 	</div>
 	<div class="footer">
+		afalmer-
 	</div>
 </body>
 </html>

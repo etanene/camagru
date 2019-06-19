@@ -9,6 +9,9 @@
 
 #search {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #search input {
@@ -28,6 +31,22 @@
     position: absolute;
     top: 7px;
     right: 25px;
+}
+
+#take-pic {
+    position: absolute;
+    top: 37px;
+    width: 200px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    background-color: white;
 }
 
 #user-nav {
