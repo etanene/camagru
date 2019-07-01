@@ -1,5 +1,5 @@
 <div id="upload">
-    <video id="webcam" style="width: 300px; height: 300px;" autoplay style="transform: scaleX(-1);"></video>
+    <video id="webcam" style="width: 480px; height: 360px;" autoplay style="transform: scaleX(-1);"></video>
     <button id="takePhoto">
         Take a photo
     </button>
@@ -41,7 +41,7 @@
     };
 
     takePhoto.onclick = () => {
-        context.drawImage(video, 0, 0, 300, 300);
+        context.drawImage(video, 0, 0, 480, 360);
     };
 
     // uploadForm.onsubmit = (e) => { 
