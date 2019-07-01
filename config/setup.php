@@ -41,6 +41,19 @@ try {
     );';
     $dbh->exec($sql);
     echo 'Table likes created' . PHP_EOL;
+    $sql = 'CREATE TABLE IF NOT EXISTS ' . $DB_NAME . '.stickers (
+        `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `image` VARCHAR(64) NOT NULL UNIQUE,
+        `name` VARCHAR(64) NOT NULL
+    );';
+    $dbh->exec($sql);
+    echo 'Table stickers created' . PHP_EOL;
+    $sql = 'INSERT INTO ' . $DB_NAME . '.stickers (`image`, `name`)
+            VALUES  ("1f4a9.png", "poo"),
+                    ("1f60e.png", "sunglasses"),
+                    ("1f926.png", "facepalm");';
+    $dbh->exec($sql);
+    echo 'Filled table stickers' . PHP_EOL;
 } catch (PDOException $e) {
     echo 'Error!: ' . $e->getMessage() . PHP_EOL;
 }

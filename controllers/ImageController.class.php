@@ -10,6 +10,7 @@ class ImageController extends Controller {
         $this->model = new Image();
         $this->comments = new Comment();
         $this->likes = new Like();
+        $this->stickers = new Sticker();
     }
 
     public function show() {
@@ -30,5 +31,6 @@ class ImageController extends Controller {
             move_uploaded_file($_FILES['image']['tmp_name'], $dir . $filename);
             $this->model->addImage($filename, Session::get('logged'));
         }
+        $this->data['stickers'] = $this->stickers->getAllStickers();
     }
 }

@@ -8,3 +8,40 @@
     object-fit: cover;
     border-radius: 10px;
 }
+
+#upload {
+    display: flex;
+    flex-direction: column;
+    margin: 25px;
+}
+
+#select-stick {
+    display: flex;
+}
+
+#get-photo {
+    display: flex;
+}
+
+#get-pic {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+#preview-pic {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+#video-webcam {
+    position: relative;
+}
+
+.sticker {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
