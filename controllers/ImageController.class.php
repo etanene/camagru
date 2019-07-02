@@ -21,6 +21,7 @@ class ImageController extends Controller {
     }
 
     public function add() {
+        
         if (!Session::get('logged')) {
             App::redirect('/user/login');
             exit();

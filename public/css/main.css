@@ -37,10 +37,12 @@
 
 #video-webcam {
     position: relative;
+    /* z-index: 2; */
 }
 
 .sticker {
     position: absolute;
+    cursor: move;
     top: 0px;
     left: 0px;
     z-index: 1;

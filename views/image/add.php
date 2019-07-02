@@ -34,9 +34,9 @@
     let canvas = document.getElementById('photo');
     let context = canvas.getContext('2d');
     let stickForm = document.getElementById('get-stick');
+    let videoBlock = document.getElementById('video-webcam');
     let stickers = [];
     // let img = new Image();
-    let videoBlock = document.getElementById('video-webcam');
 
     canvas.width = video.offsetWidth;
     canvas.height = video.offsetHeight;
@@ -53,11 +53,12 @@
 
     takePhoto.onclick = () => {
         context.drawImage(video, 0, 0, 480, 360);
+        for (let key in stickers) {
+            context.drawImage(stickers[key], stickers[key].offsetLeft, stickers[key].offsetTop);
+        }
     };
 
     stickForm.onchange = (event) => {
-        
-        
         if (event.target.checked) {
             let stick = new Image();
             
@@ -73,16 +74,17 @@
 
     videoBlock.onmousedown = (event) => {
         let target = event.target;
-
-        console.log(target);
-        
+        let x = event.clientX;
+        let y = event.clientY;
 
         move = (event) => {
-            console.log(event);
-            console.log(event.pageX);
-            console.log(event.pageY);
-            target.style.left = event.layerX - target.offsetWidth / 2 + 'px';
-            target.style.top = event.layerY - target.offsetHeight / 2 + 'px';
+            let newX = x - event.clientX;
+            let newY = y - event.clientY;
+            x = event.clientX;
+            y = event.clientY;
+
+            target.style.left = target.offsetLeft - newX + 'px';
+            target.style.top = target.offsetTop - newY + 'px';
         };
 
         videoBlock.onmousemove = (event) => {
@@ -99,37 +101,43 @@
         };
     };
 
-    // userfile.onchange = () => {
-    //     let fr = new FileReader();
+    userfile.onchange = () => {
+        let fr = new FileReader();
 
-    //     fr.onload = () => {
-    //         img.src = fr.result;
-    //         context.clearRect(0, 0, canvas.width, canvas.height);
-    //         console.log(img);
-    //         context.drawImage(img, 0, 0, 480, 360);
-    //     };
+        fr.onload = () => {
+            let img = new Image();
 
-    //     fr.readAsDataURL(userfile.files[0]);
-    // };
+            img.onload = () => {
+                context.drawImage(img, 0, 0, 480, 360);
+            };
+            img.src = fr.result;
+        };
 
-    
+        fr.readAsDataURL(userfile.files[0]);
+    };
 
-    // uploadForm.onsubmit = (e) => { 
-    //     e.preventDefault();
-    //     if (!img.src) {
-    //         return ;
-    //     }
+    uploadForm.onsubmit = (event) => { 
+        event.preventDefault();
+        // if (!img.src) {
+        //     return ;
+        // }
+        // canvas.toDataURL() == document.getElementById('blank').toDataURL()
 
-    //     fetch('http://localhost:8080/image/add/', {
-    //         method: 'POST',
-    //         headers: {'Content-type' : 'multipart/form-data'},
-    //         body: new FormData(uploadForm)
-    //     })
-    //         .then((res) => {
-    //             return (res.json());
-    //         })
-    //         .then((data) => {
-    //             alert(data.message);
-    //         });
-    // };
+        let formData = new FormData();
+        formData.append('file', userfile.files[0]);
+        fetch('http://localhost:8080/image/add', {
+            method: 'POST',
+            headers: {'Content-type': 'multipart/form-data',},
+            body: formData
+        })
+            .then(() => {
+                console.log('ok');
+            });
+            // .then((res) => {
+            //     return (res.json());
+            // });
+            // .then((data) => {
+            //     console.log(data.message);
+            // });
+    };
 </script>
