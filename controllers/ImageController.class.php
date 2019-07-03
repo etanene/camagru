@@ -26,12 +26,22 @@ class ImageController extends Controller {
             App::redirect('/user/login');
             exit();
         }
+        $json = file_get_contents('php://input');
+        $data = json_decode($json);
         if ($_FILES) {
+            
             $dir = ROOT . '/public/img/photo/';
             $filename = uniqid();
             move_uploaded_file($_FILES['image']['tmp_name'], $dir . $filename);
             $this->model->addImage($filename, Session::get('logged'));
         }
         $this->data['stickers'] = $this->stickers->getAllStickers();
+    }
+
+    public function test() {
+        $json = file_get_contents('php://input');
+        
+        $arr = json_decode($json, true);
+        exit($_FILE);
     }
 }

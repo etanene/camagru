@@ -36,7 +36,8 @@
     let stickForm = document.getElementById('get-stick');
     let videoBlock = document.getElementById('video-webcam');
     let stickers = [];
-    // let img = new Image();
+    let uploadStickers = [];
+    let blobPhoto;
 
     canvas.width = video.offsetWidth;
     canvas.height = video.offsetHeight;
@@ -52,9 +53,16 @@
     });
 
     takePhoto.onclick = () => {
+        context.clearRect(0, 0, 480, 360);
         context.drawImage(video, 0, 0, 480, 360);
+
+        canvas.toBlob((blob) => {
+            blobPhoto = blob;
+        });
+
         for (let key in stickers) {
             context.drawImage(stickers[key], stickers[key].offsetLeft, stickers[key].offsetTop);
+            uploadStickers[key] = stickers[key];
         }
     };
 
@@ -108,7 +116,11 @@
             let img = new Image();
 
             img.onload = () => {
+                context.clearRect(0, 0, 480, 360);
                 context.drawImage(img, 0, 0, 480, 360);
+                canvas.toBlob((blob) => {
+                    blobPhoto = blob;
+                });
             };
             img.src = fr.result;
         };
@@ -116,28 +128,46 @@
         fr.readAsDataURL(userfile.files[0]);
     };
 
-    uploadForm.onsubmit = (event) => { 
+    uploadForm.onsubmit = async (event) => { 
         event.preventDefault();
-        // if (!img.src) {
-        //     return ;
-        // }
-        // canvas.toDataURL() == document.getElementById('blank').toDataURL()
+
+        if (!blobPhoto) {
+            return ;
+        }
 
         let formData = new FormData();
-        formData.append('file', userfile.files[0]);
-        fetch('http://localhost:8080/image/add', {
-            method: 'POST',
-            headers: {'Content-type': 'multipart/form-data',},
-            body: formData
-        })
-            .then(() => {
-                console.log('ok');
-            });
-            // .then((res) => {
-            //     return (res.json());
-            // });
-            // .then((data) => {
-            //     console.log(data.message);
-            // });
+        formData.append('image', blobPhoto);
+
+        // if (Object.keys(uploadStickers).length) {
+        //     let stickData = {};
+            
+        //     for (let key in uploadStickers) {
+        //         let res = await fetch('/public/img/sticker/' + key);
+        //         let blob = await res.blob();
+
+        //         stickData[key] = {};
+        //         stickData[key]['image'] = blob;
+        //         stickData[key]['x'] = uploadStickers[key].offsetLeft;
+        //         stickData[key]['y'] = uploadStickers[key].offsetTop;
+        //     }
+        //     formData.append('stickers', JSON.stringify(stickData));
+        // }
+
+        // console.log(formData);
+        // let test = {};
+        // formData.forEach((value, key) => {
+        //     test[key] = value;
+        // });
+        // console.log(test);
+        // let testup = JSON.stringify(test);
+        // console.log(testup);
+        // console.log(JSON.parse(testup));
+        let response = await fetch('/image/add', {
+                method: 'POST',
+                // headers: {
+                //     'Content-Type': 'multipart/form-data'
+                // },
+                body: formData
+        });
     };
 </script>
