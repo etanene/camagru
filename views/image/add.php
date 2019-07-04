@@ -135,33 +135,20 @@
             return ;
         }
 
-        let formData = new FormData();
-        formData.append('image', blobPhoto);
+        let formData = new FormData(uploadForm);
+        formData.set('image', blobPhoto);
 
-        // if (Object.keys(uploadStickers).length) {
-        //     let stickData = {};
+        if (Object.keys(uploadStickers).length) {
+            let stickData = {};
             
-        //     for (let key in uploadStickers) {
-        //         let res = await fetch('/public/img/sticker/' + key);
-        //         let blob = await res.blob();
+            for (let key in uploadStickers) {
+                stickData[key] = {};
+                stickData[key]['x'] = uploadStickers[key].offsetLeft;
+                stickData[key]['y'] = uploadStickers[key].offsetTop;
+            }
+            formData.append('stickers', JSON.stringify(stickData));
+        }
 
-        //         stickData[key] = {};
-        //         stickData[key]['image'] = blob;
-        //         stickData[key]['x'] = uploadStickers[key].offsetLeft;
-        //         stickData[key]['y'] = uploadStickers[key].offsetTop;
-        //     }
-        //     formData.append('stickers', JSON.stringify(stickData));
-        // }
-
-        // console.log(formData);
-        // let test = {};
-        // formData.forEach((value, key) => {
-        //     test[key] = value;
-        // });
-        // console.log(test);
-        // let testup = JSON.stringify(test);
-        // console.log(testup);
-        // console.log(JSON.parse(testup));
         let response = await fetch('/image/add', {
                 method: 'POST',
                 // headers: {
