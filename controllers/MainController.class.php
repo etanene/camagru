@@ -8,6 +8,6 @@ class MainController extends Controller {
 
 	public function index() {
 		// $this->data['users'] = $this->model->getAllUsers();
-		$this->data['images'] = $this->model->getAllImages();
+		// $this->data['images'] = $this->model->getAllImages();
 	}
 }

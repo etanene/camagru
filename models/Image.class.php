@@ -27,13 +27,26 @@ class Image extends Model {
         return (empty($result) ? null : $result);
     }
 
+    public function getCountImages($count, $last) {
+        $sql = 'SELECT `id`, `image`, `login` as `user`
+                FROM `images`
+                INNER JOIN `users`
+                    ON `images`.`loginId` = `users`.`id`
+                WHERE `images`.`id` > :last
+                ORDER BY `images`.`id` DESC
+                LIMIT :count;';
+        
+        $result = $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result);
+    }
+
     public function addImage($filename, $user) {
         $sql = 'INSERT INTO `images` (`image`, `loginId`)
                 VALUES (:image, (
                     SELECT `id`
                     FROM `users`
                     WHERE `login` = :login)
-                )';
+                );';
 
         $params = [
             'image' => $filename,

@@ -20,6 +20,13 @@ class ImageController extends Controller {
         $this->data['comments'] = $this->comments->getCommentsByImage($this->params[1]);
     }
 
+    public function getimages() {
+        $count = $this->params[0];
+        $last = $this->params[1];
+
+        $images = $this->model->getCountImages($count, $last);
+    }
+
     public function add() {
         
         if (!Session::get('logged')) {
