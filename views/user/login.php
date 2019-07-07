@@ -1,4 +1,7 @@
 <div id="login-form" class="block">
+    <?php if (isset($data['message'])) { ?>
+        <div><?= $data['message'] ?></div>
+    <?php } ?>
     <form action="" method="post">
         <div>
             <input type="text" name="login" class="input" placeholder="LOGIN" />

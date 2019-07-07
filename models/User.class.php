@@ -35,14 +35,27 @@ class User extends Model {
         return (empty($result) ? null : $result[0]);
     }
 
-    public function addUser($login, $password, $email) {
-        $sql = 'INSERT INTO `users` (`login`, `password`, `email`)
-                VALUES (:login, :password, :email)';
+    public function activateUser($code) {
+        $sql = 'UPDATE `users`
+                SET `verified` = 1, `verification_code` = NULL
+                WHERE `verification_code` = :code;';
+
+        $params = [
+            'code' => $code
+        ];
+
+        return ($this->db->query($sql, $params));
+    }
+
+    public function addUser($login, $password, $email, $code) {
+        $sql = 'INSERT INTO `users` (`login`, `password`, `email`, `verification_code`)
+                VALUES (:login, :password, :email, :code)';
         
         $params = [
             'login' => $login,
             'password' => $password,
-            'email' => $email
+            'email' => $email,
+            'code' => $code
         ];
 
         return ($this->db->query($sql, $params));
