@@ -27,16 +27,21 @@ class Image extends Model {
         return (empty($result) ? null : $result);
     }
 
-    public function getCountImages($count, $last) {
-        $sql = 'SELECT `id`, `image`, `login` as `user`
+    public function getCountImages($last) {
+        $sql = 'SELECT `images`.`id`, `image`, `login` as `user`
                 FROM `images`
                 INNER JOIN `users`
                     ON `images`.`loginId` = `users`.`id`
-                WHERE `images`.`id` > :last
-                ORDER BY `images`.`id` DESC
-                LIMIT :count;';
+                WHERE `images`.`id` < :last
+                ORDER BY `images`.`id` DESC, `images`.`createdDate` DESC
+                LIMIT 6;';
         
-        $result = $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $params = [
+            'last' => $last,
+            // 'count' => $count
+        ];
+
+        $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
         return (empty($result) ? null : $result);
     }
 

@@ -20,11 +20,12 @@ class ImageController extends Controller {
         $this->data['comments'] = $this->comments->getCommentsByImage($this->params[1]);
     }
 
-    public function getimages() {
-        $count = $this->params[0];
-        $last = $this->params[1];
+    public function get() {
+        $last = isset($this->params[0]) ? $this->params[0] : PHP_INT_MAX;
+        // $count = isset($this->params[1]) ? $this->params[1] : 9;
 
-        $images = $this->model->getCountImages($count, $last);
+        $images = $this->model->getCountImages($last);
+        exit(json_encode($images));
     }
 
     public function add() {
