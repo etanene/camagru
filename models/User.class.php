@@ -60,4 +60,44 @@ class User extends Model {
 
         return ($this->db->query($sql, $params));
     }
+
+    public function updateVerifyCode($user, $code) {
+        $sql = 'UPDATE `users`
+                SET `verification_code` = :code
+                WHERE `login` = :login;';
+        
+        $params = [
+            'login' => $user,
+            'code' => $code
+        ];
+
+        return ($this->db->query($sql, $params));
+    }
+
+    public function getUserByVerifyCode($code) {
+        $sql = 'SELECT *
+                FROM `users`
+                WHERE `verification_code` = :code;';
+        
+        $params = [
+            'code' => $code
+        ];
+
+        $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result[0]);
+    }
+
+    public function updateUserPassword($user, $password) {
+        $sql = 'UPDATE `users`
+                SET `password` = :password
+                WHERE `login` = :login;';
+        
+        $params = [
+            'password' => $password,
+            'login' => $user
+        ];
+
+        return ($this->db->query($sql, $params));
+    }
+
 }

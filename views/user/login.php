@@ -2,7 +2,7 @@
     <?php if (isset($data['message'])) { ?>
         <div><?= $data['message'] ?></div>
     <?php } ?>
-    <form action="" method="post">
+    <form action="/user/login" method="post">
         <div>
             <input type="text" name="login" class="input" placeholder="LOGIN" />
         </div>
@@ -11,7 +11,8 @@
         </div>
         <div id="form-buttons">
             <input type="submit" value="Log in" id="login-button" />
-            <a href="/user/register" id="reg-button">Register</a>
         </div>
     </form>
+    <a href="/user/register" id="reg-button">Register</a>
+    <a href="/user/reset">Reset password</a>
 </div>
