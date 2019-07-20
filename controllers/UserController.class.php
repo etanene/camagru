@@ -9,20 +9,25 @@ class UserController extends Controller {
     public function login() {
         if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
             $user = $this->model->getUserByLogin($_POST['login']);
+            $resolve = [];
             if (isset($user) && password_verify($_POST['password'], $user['password'])) {
                 if ($user['verified'] == 1) {
                     Session::set('logged', $user['login']);
+                    App::redirect('/');
                 } else {
                     $code = hash('md5', uniqid());
                     $this->model->updateVerifyCode($user['login'], $code);
                     $this->sendVerifyCode($user['email'], $code);
                     // $data['message'] = 'Your account not verified, check your email again!';
                     // return (ROOT . '/views/user/login.php');
-                    App::redirect('/user/login');
+                    // App::redirect('/user/login');
                     // exit();
+                    $resolve['message'] = 'Send on your email verify code.';
+                    exit(json_encode($reslove));   
                 }
             }
-            App::redirect('/');
+            $resolve['message'] = 'Invalid login or password.';
+            exit(json_encode($resolve));
         }
     }
 
