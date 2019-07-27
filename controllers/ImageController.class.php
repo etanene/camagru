@@ -20,20 +20,35 @@ class ImageController extends Controller {
         $this->data['comments'] = $this->comments->getCommentsByImage($this->params[1]);
     }
 
+    public function get() {
+        $last = isset($this->params[0]) ? $this->params[0] : PHP_INT_MAX;
+        // $count = isset($this->params[1]) ? $this->params[1] : 9;
+
+        $images = $this->model->getCountImages($last);
+        exit(json_encode($images));
+    }
+
     public function add() {
         
         if (!Session::get('logged')) {
             App::redirect('/user/login');
             exit();
         }
-        $json = file_get_contents('php://input');
-        $data = json_decode($json);
+
         if ($_FILES) {
+            $resImg = imagecreatefromstring(file_get_contents($_FILES['image']['tmp_name']));
+            $stickers = json_decode($_POST['stickers'], true);
             
+            foreach($stickers as $key => $stick) {
+                $stickImg = imagecreatefromstring(file_get_contents(ROOT . '/public/img/sticker/' . $key));
+                imagecopy($resImg, $stickImg, $stick['x'], $stick['y'], 0, 0, 128, 128);
+            }
+
             $dir = ROOT . '/public/img/photo/';
             $filename = uniqid();
-            move_uploaded_file($_FILES['image']['tmp_name'], $dir . $filename);
+            imagepng($resImg, $dir . $filename);
             $this->model->addImage($filename, Session::get('logged'));
+            exit();
         }
         $this->data['stickers'] = $this->stickers->getAllStickers();
     }
@@ -42,6 +57,6 @@ class ImageController extends Controller {
         $json = file_get_contents('php://input');
         
         $arr = json_decode($json, true);
-        exit($_FILE);
+        exit();
     }
 }
