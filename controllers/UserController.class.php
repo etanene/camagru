@@ -23,7 +23,7 @@ class UserController extends Controller {
                     // App::redirect('/user/login');
                     // exit();
                     $resolve['message'] = 'Send on your email verify code.';
-                    exit(json_encode($reslove));   
+                    exit(json_encode($resolve));   
                 }
             }
             $resolve['message'] = 'Invalid login or password.';
