@@ -13,7 +13,6 @@ class UserController extends Controller {
             if (isset($user) && password_verify($_POST['password'], $user['password'])) {
                 if ($user['verified'] == 1) {
                     Session::set('logged', $user['login']);
-                    App::redirect('/');
                 } else {
                     $code = hash('md5', uniqid());
                     $this->model->updateVerifyCode($user['login'], $code);
@@ -23,10 +22,12 @@ class UserController extends Controller {
                     // App::redirect('/user/login');
                     // exit();
                     $resolve['message'] = 'Send on your email verify code.';
-                    exit(json_encode($reslove));   
+                    http_response_code(400);
                 }
+            } else {
+                $resolve['message'] = 'Invalid login or password.';
+                http_response_code(400);
             }
-            $resolve['message'] = 'Invalid login or password.';
             exit(json_encode($resolve));
         }
     }

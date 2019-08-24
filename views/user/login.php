@@ -35,6 +35,9 @@
                 let errDiv = document.createElement('div');
                 errDiv.innerHTML = data.message;
                 loginDiv.appendChild(errDiv);
+            })
+            .catch((err) => {
+                console.log(err);
             });
     };
 </script>
