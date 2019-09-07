@@ -54,6 +54,4 @@
             observer.observe(targetObserve);
         });
 
-    
-
 </script>

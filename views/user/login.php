@@ -1,5 +1,4 @@
 <div id="login-div" class="block">
-    <!-- <form action="/user/login" method="post"> -->
     <form id="login-form" method="post">
         <div>
             <input type="text" name="login" class="input" placeholder="LOGIN" />
@@ -15,29 +14,37 @@
     <a href="/user/reset">Reset password</a>
 </div>
 <script>
-    let loginDiv = document.getElementById('login-div');
-    let loginForm = document.getElementById('login-form');
+    const loginDiv = document.getElementById('login-div');
+    const loginForm = document.getElementById('login-form');
 
     loginForm.onsubmit = (event) => {
         event.preventDefault();
 
-        let formData = new FormData(loginForm);
+        const formData = new FormData(loginForm);
 
         fetch('/user/login', {
             method: 'POST',
             body: formData
         })
             .then((res) => {
+                if (res.redirected) {
+                    document.location.href = res.url;
+                }
                 return res.json();
             })
             .then((data) => {
-                console.log(data);
-                let errDiv = document.createElement('div');
-                errDiv.innerHTML = data.message;
-                loginDiv.appendChild(errDiv);
+                // let messageDiv = document.getElementById('message');
+                
+                // if (!messageDiv) {
+                //     messageDiv = document.createElement('div');
+                //     messageDiv.id = 'message';
+                //     loginDiv.appendChild(messageDiv);
+                // }
+                // messageDiv.innerHTML = data.message;
+                alert(data.message);
             })
             .catch((err) => {
-                console.log(err);
+                console.log('Err: ' + err);
             });
     };
 </script>

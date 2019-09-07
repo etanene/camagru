@@ -13,20 +13,17 @@ class UserController extends Controller {
             if (isset($user) && password_verify($_POST['password'], $user['password'])) {
                 if ($user['verified'] == 1) {
                     Session::set('logged', $user['login']);
+                    App::redirect('/');
+                } else if ($user['verification_code']) {
+                    $resolve['message'] = 'Check your email for verify account';
                 } else {
                     $code = hash('md5', uniqid());
                     $this->model->updateVerifyCode($user['login'], $code);
                     $this->sendVerifyCode($user['email'], $code);
-                    // $data['message'] = 'Your account not verified, check your email again!';
-                    // return (ROOT . '/views/user/login.php');
-                    // App::redirect('/user/login');
-                    // exit();
-                    $resolve['message'] = 'Send on your email verify code.';
-                    http_response_code(400);
+                    $resolve['message'] = 'Send on your email verify account link.';
                 }
             } else {
                 $resolve['message'] = 'Invalid login or password.';
-                http_response_code(400);
             }
             exit(json_encode($resolve));
         }
@@ -34,20 +31,21 @@ class UserController extends Controller {
 
     public function register() {
         if ($_POST && isset($_POST['login']) && isset($_POST['password']) && isset($_POST['email'])) {
-                $checkLogin = $this->model->getUserByLogin($_POST['login']);
-                $checkEmail = $this->model->getUserByEmail($_POST['email']);
-                if (isset($checkLogin) || isset($checkEmail)) {
-                    App::redirect('/');
-                    // exit();
-                }
+            $checkLogin = $this->model->getUserByLogin($_POST['login']);
+            $checkEmail = $this->model->getUserByEmail($_POST['email']);
+            $resolve = [];
+            if (isset($checkLogin)) {
+                $resolve['message'] = 'This login is already used.';
+            } else if (isset($checkEmail)) {
+                $resolve['message'] = 'This email is already used.';
+            } else {
                 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 $code = hash('md5', uniqid());
                 $this->model->addUser($_POST['login'], $hash, $_POST['email'], $code);
                 $this->sendVerifyCode($_POST['email'], $code);
-                // $data['message'] = 'Check your email to verified account';
-                // return (ROOT . '/views/user/login.php');
-                App::redirect('/user/login');
-                // exit();
+                $resolve['message'] = 'Send on your email verify account link.';
+            }
+            exit(json_encode($resolve));
         }
     }
 
@@ -67,24 +65,23 @@ class UserController extends Controller {
             $code = $this->params[0];
             $user = $this->model->getUserByVerifyCode($code);
             if ($user) {
-                // App::redirect('/user/resetpw');
                 Session::set('verifyCode', $code);
                 Session::set('verifyUser', $user['login']);
                 App::redirect('/user/resetpw');
-            } else {
-                App::redirect('/');
             }
-            // exit();
         } else if ($_POST && isset($_POST['email'])) {
+            $resolve = [];
             $user = $this->model->getUserByEmail($_POST['email']);
             if (!isset($user)) {
-                exit();
+                $resolve['message'] = 'No users with this email.';
+                
+            } else {
+                $code = hash('md5', uniqid());
+                $this->model->updateVerifyCode($user['login'], $code);
+                $this->sendResetCode($user['email'], $code);
+                $resolve['message'] = 'Send on your email reset passwort link.';
             }
-            $code = hash('md5', uniqid());
-            $this->model->updateVerifyCode($user['login'], $code);
-            $this->sendResetCode($user['email'], $code);
-            App::redirect('/user/login');
-            // exit();
+            exit(json_encode($resolve));
         }
     }
 
@@ -93,7 +90,6 @@ class UserController extends Controller {
         $code = Session::get('verifyCode');
         if (!($user && $code)) {
             App::redirect('/user/login');
-            // exit();
         }
         if ($_POST && $_POST['password']) {
             $this->model->updateVerifyCode($user, NULL);
