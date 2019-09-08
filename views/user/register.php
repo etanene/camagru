@@ -15,12 +15,33 @@
     </form>
     <a href="/user/login" id="reg-button">Log in</a>
 </div>
-<script>
+<script type="module">
     const regDiv = document.getElementById('register-div');
     const regForm = document.getElementById('register-form');
+    import {validateEmail, validateLogin, validatePassword} from '/views/utils/validate.js';
 
-    regForm.login.onchange = () => {
-          
+    regForm.login.onchange = (event) => {
+        if (!validateLogin(event.target.value)) {
+            event.target.style.borderColor = 'red';
+        } else {
+            event.target.style.borderColor = 'initial';
+        }
+    };
+
+    regForm.password.onchange = (event) => {
+        if (!validatePassword(event.target.value)) {
+            event.target.style.borderColor = 'red';
+        } else {
+            event.target.style.borderColor = 'initial';
+        }
+    };
+
+    regForm.email.onchange = (event) => {
+        if (!validateEmail(event.target.value)) {
+            event.target.style.borderColor = 'red';
+        } else {
+            event.target.style.borderColor = 'initial';
+        }
     };
 
     regForm.onsubmit = (event) => {
@@ -33,26 +54,13 @@
             body: formData
         })
             .then((res) => {
-                console.log(res);
                 return res.json();
             })
             .then((data) => {
-                // let messageDiv = document.getElementById('message');
-                
-                // if (!messageDiv) {
-                //     messageDiv = document.createElement('div');
-                //     messageDiv.id = 'message';
-                //     regDiv.appendChild(messageDiv);
-                // }
-                // messageDiv.innerHTML = data.message;
                 alert(data.message);
             })
             .catch((err) => {
                 console.log('Err: ' + err);
             });
-    }
-
-    function validatePassword(passwd) {
-        
-    }
+    };
 </script>

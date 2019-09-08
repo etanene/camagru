@@ -44,6 +44,6 @@
             })
             .catch((err) => {
                 console.log('Err: ' + err);
-            })
+            });
     };
 </script>

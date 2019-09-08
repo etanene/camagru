@@ -11,6 +11,15 @@
 <script>
     const resetpwDiv = document.getElementById('resetpw-div');
     const resetpwForm = document.getElementById('resetpw-form');
+    import {validatePassword} from 'views/utils/validate.js';
+
+    resetpwForm.password.onchange = (event) => {
+        if (!validatePassword(event.target.value)) {
+            event.target.style.borderColor = 'red';
+        } else {
+            event.target.style.borderColor = 'initial';
+        }
+    };
 
     resetpwForm.onsubmit = (event) => {
         event.preventDefault();

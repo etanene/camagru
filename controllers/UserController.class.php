@@ -31,19 +31,27 @@ class UserController extends Controller {
 
     public function register() {
         if ($_POST && isset($_POST['login']) && isset($_POST['password']) && isset($_POST['email'])) {
-            $checkLogin = $this->model->getUserByLogin($_POST['login']);
-            $checkEmail = $this->model->getUserByEmail($_POST['email']);
             $resolve = [];
-            if (isset($checkLogin)) {
-                $resolve['message'] = 'This login is already used.';
-            } else if (isset($checkEmail)) {
-                $resolve['message'] = 'This email is already used.';
+            if (!$this->validateLogin($_POST['login'])) {
+                $resolve['message'] = 'Invalid login.';
+            } else if (!$this->validatePassword($_POST['password'])) {
+                $resolve['message'] = 'Invalid password.';
+            } else if (!$this->validateEmail($_POST['email'])) {
+                $resolve['message'] = 'Invalid email.';
             } else {
-                $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $code = hash('md5', uniqid());
-                $this->model->addUser($_POST['login'], $hash, $_POST['email'], $code);
-                $this->sendVerifyCode($_POST['email'], $code);
-                $resolve['message'] = 'Send on your email verify account link.';
+                $checkLogin = $this->model->getUserByLogin($_POST['login']);
+                $checkEmail = $this->model->getUserByEmail($_POST['email']);
+                if (isset($checkLogin)) {
+                    $resolve['message'] = 'This login is already used.';
+                } else if (isset($checkEmail)) {
+                    $resolve['message'] = 'This email is already used.';
+                } else {
+                    $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    $code = hash('md5', uniqid());
+                    $this->model->addUser($_POST['login'], $hash, $_POST['email'], $code);
+                    $this->sendVerifyCode($_POST['email'], $code);
+                    $resolve['message'] = 'Send on your email verify account link.';
+                }
             }
             exit(json_encode($resolve));
         }
@@ -54,8 +62,6 @@ class UserController extends Controller {
         if ($code) {
             $this->model->activateUser($code);
             App::redirect('/user/login');
-            // $data['message'] = 'Your account verified, you can log in!';
-            // return (ROOT . '/views/user/login.php');
         }
         exit();
     }
@@ -92,6 +98,11 @@ class UserController extends Controller {
             App::redirect('/user/login');
         }
         if ($_POST && $_POST['password']) {
+            $resolve = [];
+            if ($this->validatePassword($_POST['password'])) {
+                $resolve['message'] = 'Invalid password.';
+                exit(json_encode($resolve));
+            }
             $this->model->updateVerifyCode($user, NULL);
             Session::delete('verifyUser');
             Session::delete('verifyCode');
@@ -125,5 +136,17 @@ class UserController extends Controller {
         ";
         $headers = 'Content-type: text/html';
         $res = mail($email, $subject, $body, $headers);
+    }
+
+    private function validateLogin($login) {
+        return preg_match('/^[A-Za-z\d]{4,12}$/', $login);
+    }
+
+    private function validatePassword($passwd) {
+        return preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/', $passwd);
+    }
+
+    private function validateEmail($email) {
+        return preg_match('/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/', $email);
     }
 }
