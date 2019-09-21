@@ -3,7 +3,7 @@
         <div>
             <input type="password" name="password" class="input" placeholder="NEW PASSWORD" />
         </div>
-        <div id="form-buttons">
+        <div>
             <input type="submit" value="Change password" id="login-button" />
         </div>
     </form>
@@ -37,14 +37,6 @@
                 return res.json();
             })
             .then((data) => {
-                // let messageDiv = document.getElementById('message');
-                
-                // if (!messageDiv) {
-                //     messageDiv = document.createElement('div');
-                //     messageDiv.id = 'message';
-                //     resetpwDiv.appendChild(messageDiv);
-                // }
-                // messageDiv.innerHTML = data.message;
                 alert(data.message);
             })
             .catch((err) => {

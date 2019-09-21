@@ -9,7 +9,7 @@
         <div>
             <input type="text" name="email" class="input" placeholder="EMAIL" />
         </div>
-        <div id="form-buttons">
+        <div>
             <input type="submit" value="Register" id="login-button" />
         </div>
     </form>

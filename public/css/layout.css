@@ -36,12 +36,16 @@ body {
 	border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* 
+
 .block {
-	background-color: rgba(207, 212, 214);
+	background-color: #FFFFFF;
+	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
+	padding: 25px;
+	margin: 20px;
 }
 
+/*
 .images {
 	margin: 8px;
 }

@@ -18,10 +18,10 @@
 		<div id="user-nav">
 			<?php if (Session::get('logged')) { ?>
 				<span id="user-name"><?= Session::get('logged') ?></span>
-				<a href="/">
+				<a href="/user/profile">
 					<div id="profile" class="icon-nav"></div>
 				</a>
-				<a href="/">
+				<a href="/user/settings">
 					<div id="settings" class="icon-nav"></div>
 				</a>
 				<a href="/user/logout">

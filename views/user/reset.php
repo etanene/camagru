@@ -1,12 +1,9 @@
 <div id="reset-div" class="block">
     <form id="reset-form" method="post">
-        <!-- <div>
-            <input type="text" name="login" class="input" placeholder="LOGIN" />
-        </div> -->
         <div>
             <input type="text" name="email" class="input" placeholder="EMAIL" />
         </div>
-        <div id="form-buttons">
+        <div>
             <input type="submit" value="Reset password" id="login-button" />
         </div>
     </form>
@@ -32,14 +29,6 @@
                 return res.json();
             })
             .then((data) => {
-                // let messageDiv = document.getElementById('message');
-                
-                // if (!messageDiv) {
-                //     messageDiv = document.createElement('div');
-                //     messageDiv.id = 'message';
-                //     resetDiv.appendChild(messageDiv);
-                // }
-                // messageDiv.innerHTML = data.message;
                 alert(data.message);
             })
             .catch((err) => {

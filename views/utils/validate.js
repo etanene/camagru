@@ -5,7 +5,7 @@ export function validateLogin(login) {
 }
 
 export function validatePassword(passwd) {
-    const res = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/.exec(passwd);
+    const res = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,16}$/.exec(passwd);
 
     return res ? true : false;
 }
