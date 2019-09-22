@@ -50,7 +50,7 @@
 <script type="module">
     const changePwForm = document.getElementById('change-password-form');
     const changeEmailForm = document.getElementById('change-email-form');
-    const changleLoginForm = document.getElementById('change-login-form');
+    const changeLoginForm = document.getElementById('change-login-form');
     
     import {validateEmail, validateLogin, validatePassword} from '/views/utils/validate.js';
 
@@ -101,7 +101,7 @@
         } else {
             event.target.style.borderColor = 'initial';
         }
-    }
+    };
 
     changeEmailForm.onsubmit = (event) => {
         event.preventDefault();
@@ -109,6 +109,34 @@
         const formData = new FormData(changeEmailForm);
 
         fetch('/user/settings/changeemail', {
+            method: 'POST',
+            body: formData
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                alert(res.message);
+            })
+            .catch((err) => {
+                console.log('Err: ' + err);
+            });
+    };
+
+    changeLoginForm.newlogin.onchange = (event) => {
+        if (!validateLogin(event.target.value)) {
+            event.target.style.borderColor = 'red';
+        } else {
+            event.target.style.borderColor = 'initial';
+        }
+    };
+
+    changeLoginForm.onsubmit = (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(changeLoginForm);
+
+        fetch('/user/settings/changelogin', {
             method: 'POST',
             body: formData
         })

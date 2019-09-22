@@ -175,6 +175,7 @@ class UserController extends Controller {
 
     private function changePassword($oldpasswd, $newpasswd, $confirmpasswd) {
         $user = $this->model->getUserByLogin(Session::get('logged'));
+        $resolve = [];
         
         if (password_verify($oldpasswd, $user['password'])) {
             if ($newpasswd === $confirmpasswd) {
@@ -195,8 +196,18 @@ class UserController extends Controller {
     }
 
     private function changeEmail($newemail) {
-        if ($this->validateEmail($newemail)) {
-            $this->model->updateUserEmail()
+        $resolve = [];
+
+        if (!$this->model->getUserByEmail($newemail)) {
+            if ($this->validateEmail($newemail)) {
+                $this->model->updateUserEmail(Session::get('logged'), $newemail);
+                $resolve['message'] = 'Email changed!';
+            } else {
+                $resolve['message'] = 'Not valid new email!';
+            }
+        } else {
+            $resolve['message'] = 'This email already used!';
         }
+        exit(json_encode($resolve));
     }
 }
