@@ -100,4 +100,16 @@ class User extends Model {
         return ($this->db->query($sql, $params));
     }
 
+    public function updateEmailByUser($user, $password) {
+        $sql = 'UPDATE `users`
+                SET `email` = :email
+                WHERE `login` = :login;';
+
+        $params = [
+            'password' => $password,
+            'login' => $user
+        ];
+
+        return ($this->db->query($sql, $params));
+    }
 }

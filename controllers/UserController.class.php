@@ -113,6 +113,26 @@ class UserController extends Controller {
     }
 
     public function settings() {
+        if (isset($this->params) && $_POST) {
+            switch ($this->params[0]) {
+                case 'changepasswd':
+                    $this->changePassword(
+                        $_POST['oldpasswd'],
+                        $_POST['newpasswd'],
+                        $_POST['confirmpasswd']);
+                    break ;
+                case 'changeemail':
+                    $this->changeEmail($_POST['newemail']);
+                    break ;
+                case 'changelogin':
+                    $this->changeLogin($_POST['newlogin']);
+                    break ;
+                case 'notification':
+                    $this->setNotification($_POST['notification']);
+                    break ;
+            }
+        }
+
     }
 
     public function logout() {
@@ -151,5 +171,32 @@ class UserController extends Controller {
 
     private function validateEmail($email) {
         return preg_match('/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/', $email);
+    }
+
+    private function changePassword($oldpasswd, $newpasswd, $confirmpasswd) {
+        $user = $this->model->getUserByLogin(Session::get('logged'));
+        
+        if (password_verify($oldpasswd, $user['password'])) {
+            if ($newpasswd === $confirmpasswd) {
+                if ($this->validatePassword($newpasswd)) {
+                    $password = password_hash($newpasswd, PASSWORD_DEFAULT);
+                    $this->model->updateUserPassword($user['login'], $password);
+                    $resolve['message'] = 'Password changed!';
+                } else {
+                    $resolve['message'] = 'Not valid new password!';
+                }
+            } else {
+                $resolve['message'] = 'New and confirm passwords do not match!';
+            }
+        } else {
+            $resolve['message'] = 'Incorrect current password!';
+        }
+        exit(json_encode($resolve));
+    }
+
+    private function changeEmail($newemail) {
+        if ($this->validateEmail($newemail)) {
+            $this->model->updateUserEmail()
+        }
     }
 }

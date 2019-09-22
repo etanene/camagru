@@ -78,6 +78,48 @@
     changePwForm.onsubmit = (event) => {
         event.preventDefault();
 
+        const formData = new FormData(changePwForm);
         
+        fetch('/user/settings/changepasswd', {
+            method: 'POST',
+            body: formData
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                alert(res.message);
+            })
+            .catch((err) => {
+                console.log('Err: ' + err);
+            });
+    };
+
+    changeEmailForm.newemail.onchange = (event) => {
+        if (!validateEmail(event.target.value)) {
+            event.target.style.borderColor = 'red';
+        } else {
+            event.target.style.borderColor = 'initial';
+        }
+    }
+
+    changeEmailForm.onsubmit = (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(changeEmailForm);
+
+        fetch('/user/settings/changeemail', {
+            method: 'POST',
+            body: formData
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                alert(res.message);
+            })
+            .catch((err) => {
+                console.log('Err: ' + err);
+            });
     };
 </script>
