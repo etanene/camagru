@@ -112,4 +112,17 @@ class User extends Model {
 
         return ($this->db->query($sql, $params));
     }
+
+    public function updateUserLogin($user, $newLogin) {
+        $sql = 'UPDATE `users`
+                SET `login` = :newLogin
+                WHERE `login` = :login';
+
+        $params = [
+            'newLogin' => $newLogin,
+            'login' => $user
+        ];
+
+        return ($this->db->query($sql, $params));
+    }
 }

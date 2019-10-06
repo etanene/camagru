@@ -20,22 +20,28 @@ class Comment extends Model {
         return (empty($result) ? null : $result);
     }
 
-    public function addCommentToImage($comment, $image, $user) {
-        $sql = 'INSERT INTO `comments` (`text`, `imageId`, `userId`)
-                VALUES (:text, (
-                    SELECT `id`
-                    FROM `images`
-                    WHERE `image` = :image
-                ), (
-                    SELECT `id`
-                    FROM `users`
-                    WHERE `login` = :user
-                ));';
+    public function addCommentToImage($comment, $image, $user, $date = null) {
+        $sql = 'INSERT INTO `comments` (`text`, `imageId`, `userId`, `createdDate`)
+                VALUES (
+                    :text,
+                    (
+                        SELECT `id`
+                        FROM `images`
+                        WHERE `image` = :image
+                    ),
+                    (
+                        SELECT `id`
+                        FROM `users`
+                        WHERE `login` = :user
+                    ),
+                    :date
+                );';
 
         $params = [
             'text' => $comment,
             'image' => $image,
-            'user' => $user
+            'user' => $user,
+            'date' => $date
         ];
 
         return ($this->db->query($sql, $params));

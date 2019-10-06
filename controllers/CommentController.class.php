@@ -6,14 +6,15 @@ class CommentController extends Controller {
     }
 
     public function add() {
+        $resolve = [];
+
         if (!Session::get('logged')) {
-            App::redirect('/user/login');
-            exit();
+            $resolve['message'] = 'Log in to like or comment photo!';
+        } else if ($_POST && isset($_POST['comment']) && isset($_POST['image']) && isset($_POST['user'])) {
+            $date = new DateTime();
+            $this->model->addCommentToImage($_POST['comment'], $_POST['image'], $_POST['user'], $date->format('Y-m-d H:i:s'));
+            $resolve['date'] = $date->format('Y-m-d H:i:s');
         }
-        if ($_POST && isset($_POST['comment']) && isset($_POST['image']) && isset($_POST['user'])) {
-            $this->model->addCommentToImage($_POST['comment'], $_POST['image'], $_POST['user']);
-            App::redirect('/image/show/' . $_POST['author'] . '/' . $_POST['image']);
-            exit();
-        }
+        exit(json_encode($resolve));
     }
 }

@@ -63,3 +63,12 @@
     left: 0px;
     z-index: 1;
 }
+
+#like-bar {
+    display: flex;
+    align-items: center;
+}
+
+#like {
+    background-image: url('http://localhost:8080/public/img/icon/like.svg');
+}

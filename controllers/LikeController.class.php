@@ -7,13 +7,19 @@ class LikeController extends Controller {
     }
 
     public function submit() {
-        if ($_POST && isset($_POST['image']) && isset($_POST['user'])) {
+        $resolve = [];
+
+        if (Session::get('logged') && $_POST && isset($_POST['image']) && isset($_POST['user'])) {
             if ($this->model->checkLikeUserImage($_POST['image'], $_POST['user'])) {
                 $this->model->delLikeFromImage($_POST['image'], $_POST['user']);
+                $resolve['like'] = -1;
             } else {
                 $this->model->addLikeToImage($_POST['image'], $_POST['user']);
+                $resolve['like'] = 1;
             }
+        } else {
+            $resolve['message'] = 'Log in to like or comment photo!';            
         }
-        App::redirect($_SERVER['HTTP_REFERER']);
+        exit(json_encode($resolve));
     }
 }

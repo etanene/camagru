@@ -210,4 +210,21 @@ class UserController extends Controller {
         }
         exit(json_encode($resolve));
     }
+
+    private function changeLogin($newLogin) {
+        $resolve = [];
+
+        if (!$this->model->getUserByLogin($newLogin)) {
+            if ($this->validateLogin($newLogin)) {
+                $this->model->updateUserLogin(Session::get('logged'), $newLogin);
+                Session::set('logged', $newLogin);
+                $resolve['message'] = 'Login changed!';
+            } else {
+                $resolve['message'] = 'Not valid login!';
+            }
+        } else {
+            $resolve['message'] = 'This login already used!';
+        }
+        exit(json_encode($resolve));
+    }
 }
