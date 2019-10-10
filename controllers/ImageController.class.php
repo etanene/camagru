@@ -17,7 +17,6 @@ class ImageController extends Controller {
         $this->data['author'] = $this->params[0];
         $this->data['name'] = $this->params[1];
         $this->data['likes'] = $this->likes->getLikesCountByImage($this->params[1]);
-        $this->data['comments'] = $this->comments->getCommentsByImage($this->params[1]);
     }
 
     public function get() {
@@ -51,12 +50,5 @@ class ImageController extends Controller {
             exit();
         }
         $this->data['stickers'] = $this->stickers->getAllStickers();
-    }
-
-    public function test() {
-        $json = file_get_contents('php://input');
-        
-        $arr = json_decode($json, true);
-        exit();
     }
 }

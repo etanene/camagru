@@ -9,15 +9,6 @@
         </form>
     </div>
     <div id="comment-block">
-        <?php if (isset($data['comments'])) { 
-            foreach ($data['comments'] as $comment) { ?>
-            <div class="comment">
-                <div class="comment-user"><?= $comment['user'] ?></div>
-                <div class="comment-text"><?= $comment['text'] ?></div>
-                <div class="comment-date"><?= $comment['date'] ?></div>
-            </div>
-        <?php }
-        } ?>
     </div>
     <form id="comment-form" method="post">
         <div>
@@ -33,6 +24,45 @@
 
     const likeForm = document.getElementById('like-form');
     const likeButton = document.getElementById('like');
+    const commentForm = document.getElementById('comment-form');
+    const commentBlock = document.getElementById('comment-block');
+    const image = '<?= $data['name'] ?>';
+    const currentUser = '<?= Session::get('logged') ?>';
+    
+    fetch('/comment/getCommentsImage/' + image, {
+        method: 'GET'
+    })
+        .then((res) => {
+            console.log(res);
+            return res.json();
+        })
+        .then((comments) => {
+            displayComments(comments);
+            const delButtons = document.getElementsByClassName('del-cmt-btn');
+            for (let i = 0; i < delButtons.length; i++) {
+                delButtons[i].addEventListener('click', (event) => {
+                    const cmtId = event.target.parentElement.getAttribute('cmt-id');
+                    fetch('/comment/del/' + cmtId, {
+                        method: 'delete'
+                    })
+                        .then((res) => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            if (data.message) {
+                                alert(data.message);
+                            } else {
+                                event.target.parentElement.remove();
+                            }
+                        });
+                });
+            }
+        })
+        // .catch((err) => {
+        //     alert('Error!');
+        // });
+
+    
 
     likeButton.onclick = () => {
         const formData = new FormData(likeForm);
@@ -56,9 +86,6 @@
             });
     };
 
-    const commentForm = document.getElementById('comment-form');
-    const commentBlock = document.getElementById('comment-block');
-    
     commentForm.onsubmit = (event) => {
         event.preventDefault();
 
@@ -88,6 +115,7 @@
 
     function createComment(data) {
         const comment = document.createElement('div');
+        comment.setAttribute('cmt-id', data.id);
         comment.classList.add('comment');
         
         const commentUser = document.createElement('div');
@@ -105,6 +133,20 @@
         commentDate.innerHTML = data.date;
         comment.appendChild(commentDate);
 
+        if (currentUser == data.user) {
+            const delButton = document.createElement('button');
+            delButton.classList.add('del-cmt-btn');
+            delButton.innerHTML = 'delete';
+            comment.appendChild(delButton);
+        }
+
         return comment;
     };
+
+    function displayComments(data) {
+        data.forEach((item) => {
+            commentBlock.appendChild(createComment(item));
+        });
+    };
+
 </script>

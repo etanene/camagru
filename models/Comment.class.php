@@ -3,14 +3,14 @@
 class Comment extends Model {
 
     public function getCommentsByImage($image) {
-        $sql = 'SELECT `text`, `users`.`login` as `user`, `images`.`createdDate` as `date`
+        $sql = 'SELECT `comments`.`id` as `id`, `text`, `users`.`login` as `user`, `comments`.`createdDate` as `date`
                 FROM `comments`
                 INNER JOIN `images`
                     ON `comments`.`imageId` = `images`.`id`
                 INNER JOIN `users`
                     ON `comments`.`userId` = `users`.`id`
                 WHERE `images`.`image` = :image
-                ORDER BY `images`.`createdDate` ASC;';
+                ORDER BY `comments`.`createdDate` ASC;';
         
         $params = [
             'image' => $image
@@ -42,6 +42,18 @@ class Comment extends Model {
             'image' => $image,
             'user' => $user,
             'date' => $date
+        ];
+
+        return ($this->db->query($sql, $params));
+    }
+
+    public function delCommentFromImage($id) {
+        $sql = 'DELETE
+                FROM `comments`
+                WHERE `id` = :id;';
+
+        $params = [
+            'id' => $id
         ];
 
         return ($this->db->query($sql, $params));
