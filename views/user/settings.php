@@ -2,14 +2,14 @@
     <div id="comment-notification" class="block">
         <form id="comment-notification-form" method="post">
             <div>
-                <input id="notification" type="checkbox" name="notification" class="input" />
+                <input id="notification" type="checkbox" name="notice" class="input" <?= $data['checked'] && $data['checked'] ? 'checked' : '' ?> />
                 <label for="notification" style="user-select: none; cursor: pointer;">Comment notification</label>
             </div>
         </form>
     </div>
     <div id="change-password" class="block">
         <span>Change password</span>
-        <form id="change-password-form" method="form">
+        <form id="change-password-form">
             <div>
                 <input type="password" name="oldpasswd" class="input" placeholder="OLD PASSWORD " />
             </div>
@@ -48,11 +48,25 @@
     </div>
 </div>
 <script type="module">
+    const changeNotice = document.getElementById('comment-notification-form');
     const changePwForm = document.getElementById('change-password-form');
     const changeEmailForm = document.getElementById('change-email-form');
     const changeLoginForm = document.getElementById('change-login-form');
     
     import {validateEmail, validateLogin, validatePassword} from '/views/utils/validate.js';
+
+    notification.onchange = (event) => {
+        const formData = new FormData();
+        formData.append('notice', +event.target.checked);
+
+        fetch('/user/settings/notification', {
+            method: 'POST',
+            body: formData
+        })
+            // .catch((err) => {
+            //     alert('Error!');
+            // });
+    };
 
     changePwForm.newpasswd.onchange = (event) => {
         if (!validatePassword(event.target.value)) {

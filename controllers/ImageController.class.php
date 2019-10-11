@@ -35,6 +35,7 @@ class ImageController extends Controller {
         }
 
         if ($_FILES) {
+            $resolve = [];
             $resImg = imagecreatefromstring(file_get_contents($_FILES['image']['tmp_name']));
             $stickers = json_decode($_POST['stickers'], true);
             
@@ -47,8 +48,19 @@ class ImageController extends Controller {
             $filename = uniqid();
             imagepng($resImg, $dir . $filename);
             $this->model->addImage($filename, Session::get('logged'));
-            exit();
+            $resolve['imageName'] = $filename;
+            $resolve['user'] = Session::get('logged');
+            exit(json_encode($resolve));
         }
         $this->data['stickers'] = $this->stickers->getAllStickers();
+    }
+
+    public function getUserImages() {
+        $resolve = [];
+        if (isset($this->params[0])) {
+            $images = $this->model->getImagesByUser($this->params[0]);
+            $resolve = $images;
+        }
+        exit(json_encode($resolve));
     }
 }

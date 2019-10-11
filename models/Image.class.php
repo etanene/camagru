@@ -60,4 +60,20 @@ class Image extends Model {
 
         return ($this->db->query($sql, $params));
     }
+
+    public function getImagesByUser($user) {
+        $sql = 'SELECT `images`.`id`, `image`, `login` as `user`
+                FROM `images`
+                INNER JOIN `users`
+                    ON `images`.`loginId` = `users`.`id`
+                WHERE `users`.`login` = :login
+                ORDER BY `images`.`createdDate` DESC;';
+        
+        $params = [
+            'login' => $user
+        ];
+
+        $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return (empty($result) ? null : $result);
+    }
 }

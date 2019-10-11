@@ -28,19 +28,48 @@
             </form>
         </div>
     </div>
+    <div id="prev-pic-div">
+    </div>
 </div>
 <script>
-    let video = document.getElementById('webcam');
-    let canvas = document.getElementById('photo');
-    let context = canvas.getContext('2d');
-    let stickForm = document.getElementById('get-stick');
-    let videoBlock = document.getElementById('video-webcam');
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('photo');
+    const context = canvas.getContext('2d');
+    const stickForm = document.getElementById('get-stick');
+    const videoBlock = document.getElementById('video-webcam');
+    const prevBlock = document.getElementById('prev-pic-div');
+    const user = '<?= Session::get('logged') ?>';
     let stickers = [];
     let uploadStickers = [];
     let blobPhoto;
 
     canvas.width = video.offsetWidth;
     canvas.height = video.offsetHeight;
+
+    fetch('/image/getUserImages/' + user, {
+        method: 'GET'
+    })
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            if (!data.length) {
+                return ;
+            }
+
+            const delButtons = document.getElementsByClassName('del-img-btn');
+            data.forEach((image, ind) => {
+                prevBlock.appendChild(createPrevImage(image.user, image.image));
+                delButtons[ind].addEventListener('click', (event) => {
+                    fetch('/image/del/' + )
+                });
+            });
+            for (let i = 0; i < delButtons.length; i++) {
+                delButtons[i].addEventListener('click', (event) => {
+                    fetch('/image/del/' + )
+                });
+            }
+        });
 
     navigator.getUserMedia({
         audio: false,
@@ -128,7 +157,7 @@
         fr.readAsDataURL(userfile.files[0]);
     };
 
-    uploadForm.onsubmit = async (event) => { 
+    uploadForm.onsubmit = (event) => { 
         event.preventDefault();
 
         if (!blobPhoto) {
@@ -149,12 +178,36 @@
             formData.append('stickers', JSON.stringify(stickData));
         }
 
-        let response = await fetch('/image/add', {
+        fetch('/image/add', {
                 method: 'POST',
                 // headers: {
                 //     'Content-Type': 'multipart/form-data'
                 // },
                 body: formData
-        });
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                prevBlock.prepend(createPrevImage(data.user, data.imageName));
+            });
+    };
+
+    function createPrevImage(user, imageName) {
+        let imageDiv = document.createElement('div');
+        let imageA = document.createElement('a');
+        let delButton = document.createElement('button');
+        let image = new Image();
+
+        delButton.classList.add('del-img-btn');
+        delButton.innerHTML = 'delete';
+        image.src = 'http://localhost:8080/public/img/photo/' + imageName;
+        imageA.setAttribute('href', '/image/show/' + user + '/' + imageName);
+        imageA.appendChild(image);
+        imageDiv.className = 'prev-pic';
+        imageDiv.appendChild(imageA);
+        imageDiv.appendChild(delButton);
+
+        return (imageDiv);
     };
 </script>

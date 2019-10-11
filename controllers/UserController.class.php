@@ -128,11 +128,17 @@ class UserController extends Controller {
                     $this->changeLogin($_POST['newlogin']);
                     break ;
                 case 'notification':
-                    $this->setNotification($_POST['notification']);
+                    $this->setNotification($_POST['notice']);
                     break ;
             }
+        } else {
+            $user = $this->model->getUserByLogin(Session::get('logged'));
+            if ($user['notice']) {
+                $this->data['checked'] = true;
+            } else {
+                $this->data['checked'] = false;
+            }
         }
-
     }
 
     public function logout() {
@@ -226,5 +232,10 @@ class UserController extends Controller {
             $resolve['message'] = 'This login already used!';
         }
         exit(json_encode($resolve));
+    }
+
+    private function setNotification($notice) {
+        $this->model->updateUserNotice(Session::get('logged'), $notice);
+        exit();
     }
 }

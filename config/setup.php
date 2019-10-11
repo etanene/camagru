@@ -18,7 +18,8 @@ try {
         `password` VARCHAR(255) NOT NULL,
         `verified` TINYINT NOT NULL DEFAULT 0,
         `verification_code` VARCHAR(255) NOT NULL,
-        `notification` TINYINT NOT NULL DEFAULT 0
+        `notification` TINYINT NOT NULL DEFAULT 0,
+        `notice` TINYINT NOT NULL DEFAULT 1
     );';
     $dbh->exec($sql);
     echo 'Table users created' . PHP_EOL;

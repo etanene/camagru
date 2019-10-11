@@ -33,10 +33,13 @@
         method: 'GET'
     })
         .then((res) => {
-            console.log(res);
             return res.json();
         })
         .then((comments) => {
+            if (!comments.length) {
+                return ;
+            }
+
             displayComments(comments);
             const delButtons = document.getElementsByClassName('del-cmt-btn');
             for (let i = 0; i < delButtons.length; i++) {
@@ -81,9 +84,9 @@
                     countLike.innerHTML = Number(countLike.innerHTML) + data.like;
                 }
             })
-            .catch((err) => {
-                alert('Error!');
-            });
+            // .catch((err) => {
+            //     alert('Error!');
+            // });
     };
 
     commentForm.onsubmit = (event) => {
@@ -105,6 +108,7 @@
                     data.user = commentForm.user.value;
                     data.text = commentForm.comment.value;
 
+                    commentForm.comment.value = '';
                     commentBlock.appendChild(createComment(data));
                 }
             })

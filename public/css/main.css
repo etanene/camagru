@@ -25,6 +25,22 @@
 .form-buttons {
 }
 
+#prev-pic-div {
+    display: flex;
+    max-width: 980px;
+    overflow-x: scroll;
+}
+
+.prev-pic {
+    margin: 3px;
+}
+
+.prev-pic img {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+}
+
 #upload {
     display: flex;
     flex-direction: column;
