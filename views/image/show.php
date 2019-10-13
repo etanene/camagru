@@ -71,6 +71,9 @@
 
     if (delUserImage) {
         delUserImage.onclick = () => {
+            if (!confirm('Are you sure?')) {
+                return ;
+            }
             fetch('/image/del/' + image, {
                 method: 'DELETE'
             })
@@ -171,6 +174,9 @@
             delButton.classList.add('del-img-btn');
             comment.appendChild(delButton);
             delButton.addEventListener('click', (event) => {
+                    if (!confirm('Are you sure?')) {
+                        return ;
+                    }
                     const cmtId = event.target.parentElement.getAttribute('cmt-id');
                     fetch('/comment/del/' + cmtId, {
                         method: 'DELETE'

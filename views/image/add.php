@@ -221,23 +221,26 @@
         imageDiv.appendChild(imageA);
         imageDiv.appendChild(delButton);
         delButton.addEventListener('click', (event) => {
-                    fetch('/image/del/' + imageName, {
-                        method: 'DELETE'
-                    })
-                        .then((res) => {
-                            return res.json();
-                        })
-                        .then((data) => {
-                            if (data.message) {
-                                alert(data.message);
-                            } else {
-                                event.target.parentElement.remove();
-                            }
-                        })
-                        .catch((err) => {
-                            alert('Error');
-                        });
+            if (!confirm('Are you sure?')) {
+                return ;
+            }
+            fetch('/image/del/' + imageName, {
+                method: 'DELETE'
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    if (data.message) {
+                        alert(data.message);
+                    } else {
+                        event.target.parentElement.remove();
+                    }
+                })
+                .catch((err) => {
+                    alert('Error');
                 });
+        });
 
         return (imageDiv);
     };

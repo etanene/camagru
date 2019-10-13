@@ -52,6 +52,7 @@
     top: 5px;
     cursor: pointer;
     border: none;
+    outline: none;
 }
 
 .del-img-btn:before, .del-img-btn:after {
