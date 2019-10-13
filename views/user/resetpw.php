@@ -3,6 +3,7 @@
         <div>
             <input type="password" name="password" class="input" placeholder="NEW PASSWORD" />
         </div>
+        <span class="valid-input">Letters and numbers (A-Z, a-z, 0-9). Length 4-12</span>
         <div>
             <input type="submit" value="Change password" id="login-button" />
         </div>

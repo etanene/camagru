@@ -29,11 +29,12 @@
             .then((res) => {
                 if (res.redirected) {
                     document.location.href = res.url;
+                } else {
+                    return res.json();
                 }
-                return res.json();
             })
             .then((data) => {
-                alert(data.message);
+                data && alert(data.message);
             })
             .catch((err) => {
                 alert('Err: ' + err);

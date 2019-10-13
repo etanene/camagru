@@ -16,7 +16,7 @@
                         <input type="hidden" name="user" value="<?= Session::get('logged') ?>" />
                         <input type="hidden" name="image" value="<?= $data['name'] ?>" />
                         <input type="hidden" name="author" value="<?= $data['author'] ?>" />
-                        <input type="submit" value="Send" />
+                        <input type="submit" value="Send" class="submit" />
                     </div>
                 </form>
             </div>

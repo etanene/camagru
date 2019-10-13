@@ -43,6 +43,7 @@ body {
 	border-radius: 5px;
 	padding: 25px;
 	margin: 20px;
+	box-sizing: content-box;
 }
 
 /*

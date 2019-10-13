@@ -2,7 +2,7 @@
     <div id="comment-notification" class="block">
         <form id="comment-notification-form" method="post">
             <div>
-                <input id="notification" type="checkbox" name="notice" class="input" <?= $data['checked'] && $data['checked'] ? 'checked' : '' ?> />
+                <input id="notification" type="checkbox" name="notice" <?= $data['checked'] && $data['checked'] ? 'checked' : '' ?> />
                 <label for="notification" style="user-select: none; cursor: pointer;">Comment notification</label>
             </div>
         </form>
@@ -16,11 +16,13 @@
             <div>
                 <input type="password" name="newpasswd" class="input" placeholder="NEW PASSWORD" />
             </div>
+            <span class="valid-input">Letters and numbers (A-Z, a-z, 0-9). Length 4-12</span>
             <div>
                 <input type="password" name="confirmpasswd" class="input" placeholder="CONFIRM PASSWORD" />
             </div>
+            <span class="valid-input">Letters and numbers (A-Z, a-z, 0-9). Length 4-12</span>
             <div>
-                <input type="submit" />
+                <input type="submit" value="Save" class="submit" />
             </div>
         </form>
     </div>
@@ -31,7 +33,7 @@
                 <input type="text" name="newemail" class="input" placeholder="NEW EMAIL" />
             </div>
             <div>
-                <input type="submit" />
+                <input type="submit" value="Save" class="submit" />
             </div>
         </form>
     </div>
@@ -41,8 +43,9 @@
             <div>
                 <input type="text" name="newlogin" class="input" placeholder="NEW LOGIN" />
             </div>
+            <span class="valid-input">Only letters (A-Z, a-z). Length 4-12</span>
             <div>
-                <input type="submit" />
+                <input type="submit" value="Save" class="submit" />
             </div>
         </form>
     </div>
