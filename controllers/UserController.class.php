@@ -172,7 +172,7 @@ class UserController extends Controller {
     }
 
     private function validatePassword($passwd) {
-        return preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,16}$/', $passwd);
+        return preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,12}$/', $passwd);
     }
 
     private function validateEmail($email) {
