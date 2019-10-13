@@ -3,7 +3,7 @@
 class Like extends Model {
 
     public function getLikesCountByImage($image) {
-        $sql = 'SELECT COUNT(*) as `countLikes`
+        $sql = 'SELECT COUNT(*) as `count`
                 FROM `likes`
                 INNER JOIN `images`
                     ON `likes`.`imageId` = `images`.`id`

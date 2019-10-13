@@ -15,6 +15,7 @@ class CommentController extends Controller {
         } else if ($_POST && isset($_POST['comment']) && isset($_POST['image']) && isset($_POST['user']) && isset($_POST['author'])) {
             $date = new DateTime();
             $this->model->addCommentToImage($_POST['comment'], $_POST['image'], $_POST['user'], $date->format('Y-m-d H:i:s'));
+            $resolve['id'] = $this->model->getCommentId($_POST['comment'], $_POST['image'], $_POST['user'], $date->format('Y-m-d H:i:s'))['id'];
             $author = $this->user->getUserByLogin($_POST['author']);
             if ($author['notice'] && $_POST['author'] != Session::get('logged')) {
                 $this->sendCommentNotice($author['email'], $_POST['user'], $_POST['author'], $_POST['image']);

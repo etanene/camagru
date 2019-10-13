@@ -76,4 +76,16 @@ class Image extends Model {
         $result = $this->db->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
         return (empty($result) ? null : $result);
     }
+
+    public function delImageByName($image) {
+        $sql = 'DELETE
+                FROM `images`
+                WHERE `image` = :image;';
+
+        $params = [
+            'image' => $image
+        ];
+
+        return($this->db->query($sql, $params));
+    }
 }

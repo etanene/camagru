@@ -63,9 +63,9 @@
             method: 'POST',
             body: formData
         })
-            // .catch((err) => {
-            //     alert('Error!');
-            // });
+            .catch((err) => {
+                alert('Error!');
+            });
     };
 
     changePwForm.newpasswd.onchange = (event) => {
@@ -105,7 +105,7 @@
                 alert(res.message);
             })
             .catch((err) => {
-                console.log('Err: ' + err);
+                alert('Err: ' + err);
             });
     };
 
@@ -133,7 +133,7 @@
                 alert(res.message);
             })
             .catch((err) => {
-                console.log('Err: ' + err);
+                alert('Err: ' + err);
             });
     };
 
@@ -161,7 +161,7 @@
                 alert(res.message);
             })
             .catch((err) => {
-                console.log('Err: ' + err);
+                alert('Err: ' + err);
             });
     };
 </script>

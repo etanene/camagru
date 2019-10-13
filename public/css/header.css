@@ -1,5 +1,14 @@
+#header-bar {
+    display: flex;
+	align-items: center;
+    justify-content: center;
+    max-width: 980px;
+    width: 100%;    
+}
+
 #logo {
     font-size: 28px;
+    flex-grow: 1;
 }
 
 #logo a {
@@ -35,7 +44,7 @@
 
 #take-pic {
     position: absolute;
-    top: 37px;
+    top: 25px;
     width: 200px;
     height: 30px;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -52,7 +61,8 @@
 #user-nav {
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
+    flex-grow: 1;
+    justify-content: flex-end;
     /* width: 200px; */
 }
 

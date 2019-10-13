@@ -7,32 +7,35 @@
 </head>
 <body>
 	<div class="header">
-		<div id="logo">
-			<a href="/">Camagru</a>
+		<div id="header-bar">
+			<div id="logo">
+				<a href="/">Camagru</a>
+			</div>
+			<div id="search">
+				<!-- <input type="search" placeholder="Search..." />
+				<span id="icon"></span> -->
+				<a id="take-pic" href="/image/add/">Take a picture</a>
+			</div>
+			<div id="user-nav">
+				<?php if (Session::get('logged')) { ?>
+					<span id="user-name"><?= Session::get('logged') ?></span>
+					<a href="/user/profile">
+						<div id="profile" class="icon-nav"></div>
+					</a>
+					<a href="/user/settings">
+						<div id="settings" class="icon-nav"></div>
+					</a>
+					<a href="/user/logout">
+						<div id="logout" class="icon-nav"></div>
+					</a>
+				<?php } else { ?>
+					<a href="/user/login">
+						<div id="login" class="icon-nav"></div>
+					</a>
+				<?php } ?>
+			</div>
 		</div>
-		<div id="search">
-			<input type="search" placeholder="Search..." />
-			<span id="icon"></span>
-			<a id="take-pic" href="/image/add/">Take a picture</a>
-		</div>
-		<div id="user-nav">
-			<?php if (Session::get('logged')) { ?>
-				<span id="user-name"><?= Session::get('logged') ?></span>
-				<a href="/user/profile">
-					<div id="profile" class="icon-nav"></div>
-				</a>
-				<a href="/user/settings">
-					<div id="settings" class="icon-nav"></div>
-				</a>
-				<a href="/user/logout">
-					<div id="logout" class="icon-nav"></div>
-				</a>
-			<?php } else { ?>
-				<a href="/user/login">
-					<div id="login" class="icon-nav"></div>
-				</a>
-			<?php } ?>
-		</div>
+
 	</div>
 	<div class="main">
 		<?= $data['content'] ?>

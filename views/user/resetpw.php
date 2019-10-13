@@ -40,7 +40,7 @@
                 alert(data.message);
             })
             .catch((err) => {
-                console.log('Err: ' + err);
+                alert('Err: ' + err);
             });
     };
 </script>

@@ -1,24 +1,42 @@
-<div class="card">
-    <img src="http://localhost:8080/public/img/photo/<?= $data['name'] ?>" alt="image1">
-    <div id="like-bar">
-        <div id="like" class="icon-nav"></div>
-        <span id="countLike"><?= $data['likes']['countLikes'] ?></span>
-        <form id="like-form" method="post">
-            <input type="hidden" name="user" value="<?= Session::get('logged') ?>" />
-            <input type="hidden" name="image" value="<?= $data['name'] ?>" />
-        </form>
-    </div>
-    <div id="comment-block">
-    </div>
-    <form id="comment-form" method="post">
-        <div>
-            <input type="text" name="comment" class="input" />
-            <input type="hidden" name="user" value="<?= Session::get('logged') ?>" />
-            <input type="hidden" name="image" value="<?= $data['name'] ?>" />
-            <input type="hidden" name="author" value="<?= $data['author'] ?>" />
-            <input type="submit" value="Send" />
+<div class="block">
+    <div id="image-block">
+        <div id="image-block-image">
+            <img src="http://localhost:8080/public/img/photo/<?= $data['name'] ?>" alt="image1">
+            <?php if (Session::get('logged') == $data['author']) { ?>
+                <button id="del-user-image" class="del-img-btn"></button>
+            <?php } ?>
         </div>
-    </form>
+        <div id="image-block-side">
+            <div>
+                <div id="comment-block">
+                </div>
+                <form id="comment-form" method="post">
+                    <div>
+                        <input type="text" name="comment" class="input" />
+                        <input type="hidden" name="user" value="<?= Session::get('logged') ?>" />
+                        <input type="hidden" name="image" value="<?= $data['name'] ?>" />
+                        <input type="hidden" name="author" value="<?= $data['author'] ?>" />
+                        <input type="submit" value="Send" />
+                    </div>
+                </form>
+            </div>
+            <div id="image-block-side-footer">
+                <div id="like-bar">
+                    <div id="like" class="icon-nav"></div>
+                    <span id="countLike"><?= $data['likes']['count'] ?></span>
+                    <form id="like-form" method="post">
+                        <input type="hidden" name="user" value="<?= Session::get('logged') ?>" />
+                        <input type="hidden" name="image" value="<?= $data['name'] ?>" />
+                    </form>
+                </div>
+                <div id="comment-bar">
+                    <div id="comment-icon" class="icon-nav"></div>
+                    <span id="countComments"><?= $data['comments']['count'] ?></span>
+                </div>
+                <span id="author-image"><?= $data['author'] ?></span>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
@@ -26,8 +44,14 @@
     const likeButton = document.getElementById('like');
     const commentForm = document.getElementById('comment-form');
     const commentBlock = document.getElementById('comment-block');
+    const commentButton = document.getElementById('comment-icon');
+    const delUserImage = document.getElementById('del-user-image');
     const image = '<?= $data['name'] ?>';
     const currentUser = '<?= Session::get('logged') ?>';
+    const imageHeight = document.getElementById('image-block-image').children[0].height;
+    const commentFormHeight = document.getElementById('comment-form').offsetHeight;
+    const commentFooter = document.getElementById('image-block-side-footer').offsetHeight;
+    commentBlock.style.maxHeight = imageHeight - commentFormHeight - commentFooter + 'px';
     
     fetch('/comment/getCommentsImage/' + image, {
         method: 'GET'
@@ -36,35 +60,35 @@
             return res.json();
         })
         .then((comments) => {
-            if (!comments.length) {
+            if (!comments || !comments.length) {
                 return ;
             }
-
             displayComments(comments);
-            const delButtons = document.getElementsByClassName('del-cmt-btn');
-            for (let i = 0; i < delButtons.length; i++) {
-                delButtons[i].addEventListener('click', (event) => {
-                    const cmtId = event.target.parentElement.getAttribute('cmt-id');
-                    fetch('/comment/del/' + cmtId, {
-                        method: 'delete'
-                    })
-                        .then((res) => {
-                            return res.json();
-                        })
-                        .then((data) => {
-                            if (data.message) {
-                                alert(data.message);
-                            } else {
-                                event.target.parentElement.remove();
-                            }
-                        });
-                });
-            }
         })
-        // .catch((err) => {
-        //     alert('Error!');
-        // });
+        .catch((err) => {
+            alert('Error!');
+        });
 
+    if (delUserImage) {
+        delUserImage.onclick = () => {
+            fetch('/image/del/' + image, {
+                method: 'DELETE'
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    if (data.message) {
+                        alert(data.message);
+                    } else {
+                        document.location.href = '/';
+                    }
+                })
+                .catch((err) => {
+                    alert('Error');
+                });
+        };
+    }
     
 
     likeButton.onclick = () => {
@@ -84,9 +108,13 @@
                     countLike.innerHTML = Number(countLike.innerHTML) + data.like;
                 }
             })
-            // .catch((err) => {
-            //     alert('Error!');
-            // });
+            .catch((err) => {
+                alert('Error!');
+            });
+    };
+
+    commentButton.onclick = () => {
+        commentForm.comment.focus();
     };
 
     commentForm.onsubmit = (event) => {
@@ -110,11 +138,12 @@
 
                     commentForm.comment.value = '';
                     commentBlock.appendChild(createComment(data));
+                    countComments.innerHTML = Number(countComments.innerHTML) + 1;
                 }
             })
-            // .catch((err) => {
-            //     alert('Error!');
-            // });
+            .catch((err) => {
+                alert('Error!');
+            });
     };
 
     function createComment(data) {
@@ -127,7 +156,7 @@
         commentUser.innerHTML = data.user;
         comment.appendChild(commentUser);
 
-        const commentText = document.createElement('div');
+        const commentText = document.createElement('span');
         commentText.classList.add('comment-text');
         commentText.innerHTML = data.text;
         comment.appendChild(commentText);
@@ -139,9 +168,28 @@
 
         if (currentUser == data.user) {
             const delButton = document.createElement('button');
-            delButton.classList.add('del-cmt-btn');
-            delButton.innerHTML = 'delete';
+            delButton.classList.add('del-img-btn');
             comment.appendChild(delButton);
+            delButton.addEventListener('click', (event) => {
+                    const cmtId = event.target.parentElement.getAttribute('cmt-id');
+                    fetch('/comment/del/' + cmtId, {
+                        method: 'DELETE'
+                    })
+                        .then((res) => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            if (data.message) {
+                                alert(data.message);
+                            } else {
+                                event.target.parentElement.remove();
+                                countComments.innerHTML = Number(countComments.innerHTML) - 1;
+                            }
+                        })
+                        .catch((err) => {
+                            alert('Error');
+                        });
+                });
         }
 
         return comment;

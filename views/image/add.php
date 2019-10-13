@@ -60,15 +60,10 @@
             const delButtons = document.getElementsByClassName('del-img-btn');
             data.forEach((image, ind) => {
                 prevBlock.appendChild(createPrevImage(image.user, image.image));
-                delButtons[ind].addEventListener('click', (event) => {
-                    fetch('/image/del/' + )
-                });
             });
-            for (let i = 0; i < delButtons.length; i++) {
-                delButtons[i].addEventListener('click', (event) => {
-                    fetch('/image/del/' + )
-                });
-            }
+        })
+        .catch((err) => {
+            alert('Error');
         });
 
     navigator.getUserMedia({
@@ -78,7 +73,7 @@
         video.srcObject = stream;
         video.play();
     }, (error) => {
-        console.log("Error: " + error.name);
+        alert("Error: " + error.name);
     });
 
     takePhoto.onclick = () => {
@@ -116,12 +111,28 @@
 
         move = (event) => {
             let newX = x - event.clientX;
-            let newY = y - event.clientY;
+            let newY = y - event.clientY;        
+            let left = target.offsetLeft - newX;
+            let top = target.offsetTop - newY;
+
+            if (left < 0) {
+                target.style.left = 0 + 'px';
+            } else if (left > 352) {
+                target.style.left = 352 + 'px';
+            } else {
+                target.style.left = left + 'px';
+            }
+
+            if (top < 0) {
+                target.style.top = 0 + 'px';
+            } else if (top > 232) {
+                target.style.top = 232 + 'px';
+            } else {
+                target.style.top = top + 'px';
+            }
+
             x = event.clientX;
             y = event.clientY;
-
-            target.style.left = target.offsetLeft - newX + 'px';
-            target.style.top = target.offsetTop - newY + 'px';
         };
 
         videoBlock.onmousemove = (event) => {
@@ -190,6 +201,9 @@
             })
             .then((data) => {
                 prevBlock.prepend(createPrevImage(data.user, data.imageName));
+            })
+            .catch((err) => {
+                alert('Error');
             });
     };
 
@@ -200,13 +214,30 @@
         let image = new Image();
 
         delButton.classList.add('del-img-btn');
-        delButton.innerHTML = 'delete';
         image.src = 'http://localhost:8080/public/img/photo/' + imageName;
         imageA.setAttribute('href', '/image/show/' + user + '/' + imageName);
         imageA.appendChild(image);
         imageDiv.className = 'prev-pic';
         imageDiv.appendChild(imageA);
         imageDiv.appendChild(delButton);
+        delButton.addEventListener('click', (event) => {
+                    fetch('/image/del/' + imageName, {
+                        method: 'DELETE'
+                    })
+                        .then((res) => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            if (data.message) {
+                                alert(data.message);
+                            } else {
+                                event.target.parentElement.remove();
+                            }
+                        })
+                        .catch((err) => {
+                            alert('Error');
+                        });
+                });
 
         return (imageDiv);
     };
