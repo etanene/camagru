@@ -6,20 +6,20 @@
     let imagesBlock = document.getElementById('show-images');
     let sentinel = document.getElementById('sentinel');
     let lastId = 0;
+    const user = '<?= $data['user'] ?>'
 
     const observer = new IntersectionObserver((entries) => {
         if (entries[0].intersectionRatio <= 0) {
             return ;
         }
-        getImages(lastId)
+        getImages(lastId, user)
             .then((res) => {
                 if (!res) {
                     return ;
                 }
-                lastId = createImagesLines(res, lastId, imagesBlock);
+                lastId = createImagesLines(res, lastId, imagesBlock, user);
                 imagesBlock.appendChild(sentinel);
-            })
+            });
     });
     observer.observe(sentinel);
 </script>
- 

@@ -22,9 +22,16 @@ class ImageController extends Controller {
 
     public function get() {
         $last = isset($this->params[0]) ? $this->params[0] : PHP_INT_MAX;
-        // $count = isset($this->params[1]) ? $this->params[1] : 9;
+        if ($last == '0') {
+            $last = PHP_INT_MAX;
+        }
+        $user = isset($this->params[1]) ? $this->params[1] : null;
 
-        $images = $this->model->getCountImages($last);
+        if (!$user) {
+            $images = $this->model->getCountImages($last);
+        } else {
+            $images = $this->model->getCountImagesByUser($last, $user);
+        }
         exit(json_encode($images));
     }
 

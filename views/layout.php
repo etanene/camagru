@@ -19,7 +19,7 @@
 			<div id="user-nav">
 				<?php if (Session::get('logged')) { ?>
 					<span id="user-name"><?= Session::get('logged') ?></span>
-					<a href="/user/profile">
+					<a href="/user/profile/<?= Session::get('logged') ?>">
 						<div id="profile" class="icon-nav"></div>
 					</a>
 					<a href="/user/settings">

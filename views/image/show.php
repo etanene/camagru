@@ -33,7 +33,9 @@
                     <div id="comment-icon" class="icon-nav"></div>
                     <span id="countComments"><?= $data['comments']['count'] ?></span>
                 </div>
-                <span id="author-image"><?= $data['author'] ?></span>
+                <a id="author-image" href="http://localhost:8080/user/profile/<?= $data['author'] ?>">
+                    <?= $data['author'] ?>
+                </a>
             </div>
         </div>
     </div>
@@ -154,10 +156,13 @@
         comment.setAttribute('cmt-id', data.id);
         comment.classList.add('comment');
         
-        const commentUser = document.createElement('div');
+        const commentUserDiv = document.createElement('div');
+        const commentUser = document.createElement('a');
+        commentUser.href = 'http://localhost:8080/user/profile/' + data.user
         commentUser.classList.add('comment-user');
         commentUser.innerHTML = data.user;
-        comment.appendChild(commentUser);
+        commentUserDiv.appendChild(commentUser);
+        comment.appendChild(commentUserDiv);
 
         const commentText = document.createElement('span');
         commentText.classList.add('comment-text');

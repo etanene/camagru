@@ -141,6 +141,12 @@ class UserController extends Controller {
         }
     }
 
+    public function profile() {
+        if (isset($this->params[0])) {
+            $this->data['user'] = $this->params[0];
+        }
+    }
+
     public function logout() {
         Session::destroy();
     }

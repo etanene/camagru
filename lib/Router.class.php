@@ -11,17 +11,27 @@ class Router {
 
 		$uri_parts = explode('?', $this->uri);
 		$uri_parts = explode('/', $uri_parts[0]);
-		if (current($uri_parts)) {
-			$this->controller = current($uri_parts);
-			next($uri_parts);
+		if ($uri_parts[0]) {
+			$this->controller = $uri_parts[0];
 		}
-		if (current($uri_parts)) {
-			$this->action = current($uri_parts);
-			next($uri_parts);
+		if (isset($uri_parts[1])) {
+			$this->action = $uri_parts[1];
 		}
-		if (current($uri_parts)) {
+		if (isset($uri_parts[2])) {
 			$this->params = array_slice($uri_parts, 2);
 		}
+		
+		// if (current($uri_parts)) {
+		// 	$this->controller = current($uri_parts);
+		// 	next($uri_parts);
+		// }
+		// if (current($uri_parts)) {
+		// 	$this->action = current($uri_parts);
+		// 	next($uri_parts);
+		// }
+		// if (current($uri_parts) || current($uri_parts) == '0' ) {
+		// 	$this->params = array_slice($uri_parts, 2);
+		// }
 	}
 
 	public function getController() {
