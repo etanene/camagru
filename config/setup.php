@@ -17,12 +17,16 @@ try {
         `email` VARCHAR(32) NOT NULL,
         `password` VARCHAR(255) NOT NULL,
         `verified` TINYINT NOT NULL DEFAULT 0,
-        `verification_code` VARCHAR(255) NOT NULL,
-        `notification` TINYINT NOT NULL DEFAULT 0,
+        `verification_code` VARCHAR(255),
         `notice` TINYINT NOT NULL DEFAULT 1
     );';
     $dbh->exec($sql);
     echo 'Table users created' . PHP_EOL;
+
+    $sql = 'INSERT INTO ' . $DB_NAME . '.users (`login`, `email`, `password`, `verified`, `notice`)
+            VALUES  ("root", "kalex323@gmail.com", "$2y$10$MaSAIOPHwIAHhmUpQEr53..ABNLGM9FDmJd5Vm7Z.aiF8DTP/sQJ.", "1", "0");';
+    $dbh->exec($sql);
+    echo 'Add root user' . PHP_EOL;
 
     $sql = 'CREATE TABLE IF NOT EXISTS ' . $DB_NAME . '.images (
         `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

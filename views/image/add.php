@@ -16,15 +16,15 @@
             <div id="video-webcam">
                 <video id="webcam" style="width: 480px; height: 360px;" autoplay style="transform: scaleX(-1);"></video>
             </div>
-            <button id="takePhoto">
+            <button id="takePhoto" class="submit">
                 Take a photo
             </button>
         </div>
         <div id="preview-pic">
             <canvas id="photo"></canvas>
             <form enctype="multipart/form-data" id="uploadForm" method="POST" >
-                <input type="file" name="image" id="userfile" />
-                <input type="submit" name="submit" value="Upload" />
+                <input type="submit" name="submit" id="uploadButton" value="Upload" class="submit" />
+                <input type="file" name="image" id="userfile" class="submit" />
             </form>
         </div>
     </div>

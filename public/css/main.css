@@ -99,9 +99,14 @@
     margin: 5px;
 }
 
+#webcam {
+    display: block;
+}
+
 #video-webcam {
     position: relative;
     /* z-index: 2; */
+    box-sizing: border-box;
 }
 
 .sticker {
@@ -228,4 +233,8 @@
     margin-top: 10px;
     font-size: 80%;
     color: grey;
+}
+
+#uploadButton {
+    width: 100%;
 }
