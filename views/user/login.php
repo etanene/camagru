@@ -7,11 +7,14 @@
             <input type="password" name="password" class="input" placeholder="PASSWORD" />
         </div>
         <div>
-            <input type="submit" value="Log in" id="login-button" />
+            <input type="submit" value="Log in" id="login-button" class="submit" />
         </div>
     </form>
-    <a href="/user/register" id="reg-button">Register</a>
-    <a href="/user/reset">Reset password</a>
+    <a href="/user/reset" >
+        <div id="reset">
+            Reset password
+        </div>
+    </a>
 </div>
 <script>
     const loginDiv = document.getElementById('login-div');

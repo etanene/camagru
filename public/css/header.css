@@ -77,8 +77,19 @@
     background-image: url('http://localhost:8080/public/img/icon/profile.svg');
 }
 
-#user-nav #login {
-    background-image: url('http://localhost:8080/public/img/icon/profile.svg');
+#user-nav a {
+    text-decoration: none;
+}
+
+.header-button {
+    background: rgb(222, 222, 222);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    outline: none;
+    cursor: pointer;
+    color: black;
 }
 
 #user-nav #settings {

@@ -30,7 +30,10 @@
 					</a>
 				<?php } else { ?>
 					<a href="/user/login">
-						<div id="login" class="icon-nav"></div>
+						<div id="login" class="header-button">Log in</div>
+					</a>
+					<a href="/user/register">
+						<div id="register" class="header-button">Register</div>
 					</a>
 				<?php } ?>
 			</div>

@@ -4,10 +4,9 @@
             <input type="text" name="email" class="input" placeholder="EMAIL" />
         </div>
         <div>
-            <input type="submit" value="Reset password" id="login-button" />
+            <input type="submit" value="Reset password" id="login-button" class="submit" />
         </div>
     </form>
-    <a href="/user/login" id="reg-button">Log in</a>
 </div>
 <script>
     const resetDiv = document.getElementById('reset-div');

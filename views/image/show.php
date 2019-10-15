@@ -53,7 +53,7 @@
     const imageHeight = document.getElementById('image-block-image').children[0].height;
     const commentFormHeight = document.getElementById('comment-form').offsetHeight;
     const commentFooter = document.getElementById('image-block-side-footer').offsetHeight;
-    commentBlock.style.maxHeight = imageHeight - commentFormHeight - commentFooter + 'px';
+    commentBlock.style.maxHeight = imageHeight - commentFormHeight - commentFooter - 20 + 'px';
     
     fetch('/comment/getCommentsImage/' + image, {
         method: 'GET'
@@ -139,7 +139,6 @@
                     alert(data.message);
                 } else {
                     data.user = commentForm.user.value;
-                    // data.text = commentForm.comment.value;
 
                     commentForm.comment.value = '';
                     commentBlock.appendChild(createComment(data));

@@ -35,6 +35,7 @@ class UserController extends Controller {
         if ($_POST && isset($_POST['login']) && isset($_POST['password']) && isset($_POST['email'])) {
             $_POST['login'] = htmlentities($_POST['login']);
             $_POST['password'] = htmlentities($_POST['password']);
+            $_POST['confirmpassword'] = htmlentities($_POST['confirmpassword']);
             $_POST['email'] = htmlentities($_POST['email']);
             $resolve = [];
             if (!$this->validateLogin($_POST['login'])) {
@@ -43,6 +44,8 @@ class UserController extends Controller {
                 $resolve['message'] = 'Invalid password.';
             } else if (!$this->validateEmail($_POST['email'])) {
                 $resolve['message'] = 'Invalid email.';
+            } else if ($_POST['password'] != $_POST['confirmpassword']) {
+                $resolve['message'] = 'Passwords do not match!';
             } else {
                 $checkLogin = $this->model->getUserByLogin($_POST['login']);
                 $checkEmail = $this->model->getUserByEmail($_POST['email']);
@@ -105,9 +108,13 @@ class UserController extends Controller {
         }
         if ($_POST && $_POST['password']) {
             $_POST['password'] = htmlentities($_POST['password']);
+            $_POST['confirmpassword'] = htmlentities($_POST['confirmpassword']);
             $resolve = [];
-            if ($this->validatePassword($_POST['password'])) {
+            if (!$this->validatePassword($_POST['password'])) {
                 $resolve['message'] = 'Invalid password.';
+                exit(json_encode($resolve));
+            } else if ($_POST['password'] != $_POST['confirmpassword']) {
+                $resolve['message'] = 'Passwords do not match!';
                 exit(json_encode($resolve));
             }
             $this->model->updateVerifyCode($user, NULL);
@@ -120,6 +127,9 @@ class UserController extends Controller {
     }
 
     public function settings() {
+        if (!Session::get('logged')) {
+            App::redirect('/user/login');
+        }
         if (isset($this->params) && $_POST) {
             switch ($this->params[0]) {
                 case 'changepasswd':

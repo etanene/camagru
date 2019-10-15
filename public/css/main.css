@@ -219,3 +219,13 @@
 #notification {
     cursor: pointer;
 }
+
+#login-div a {
+    text-decoration: none;
+}
+
+#reset {
+    margin-top: 10px;
+    font-size: 80%;
+    color: grey;
+}

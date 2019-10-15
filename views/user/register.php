@@ -9,13 +9,16 @@
         </div>
         <span class="valid-input">Letters and numbers (A-Z, a-z, 0-9). Length 4-12</span>
         <div>
+            <input type="password" name="confirmpassword" class="input" placeholder="CONFIRM PASSWORD" />
+        </div>
+        <span class="valid-input">Letters and numbers (A-Z, a-z, 0-9). Length 4-12</span>
+        <div>
             <input type="text" name="email" class="input" placeholder="EMAIL" />
         </div>
         <div>
-            <input type="submit" value="Register" id="login-button" />
+            <input type="submit" value="Register" id="login-button" class="submit" />
         </div>
     </form>
-    <a href="/user/login" id="reg-button">Log in</a>
 </div>
 <script type="module">
     const regDiv = document.getElementById('register-div');
@@ -32,6 +35,19 @@
 
     regForm.password.onchange = (event) => {
         if (!validatePassword(event.target.value)) {
+            event.target.style.borderColor = 'red';
+        } else {
+            event.target.style.borderColor = 'initial';
+            if (event.target.value === regForm.confirmpassword.value) {
+                regForm.confirmpassword.style.borderColor = 'initial';
+            } else {
+                regForm.confirmpassword.style.borderColor = 'red';
+            }
+        }
+    };
+
+    regForm.confirmpassword.onchange = (event) => {
+        if (event.target.value !== regForm.password.value) {
             event.target.style.borderColor = 'red';
         } else {
             event.target.style.borderColor = 'initial';
