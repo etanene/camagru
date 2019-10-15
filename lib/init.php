@@ -12,7 +12,9 @@ spl_autoload_register(function ($class) {
 	} else if (file_exists($lib_path)) {
 		require_once($lib_path);
 	} else {
-		throw new Exception ('Failed include class: ' . $class);
+		header('HTTP/1.1 404 Not Found');
+		include '404.php';
+		exit();
 	}
 });
 

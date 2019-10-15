@@ -139,7 +139,7 @@
                     alert(data.message);
                 } else {
                     data.user = commentForm.user.value;
-                    data.text = commentForm.comment.value;
+                    // data.text = commentForm.comment.value;
 
                     commentForm.comment.value = '';
                     commentBlock.appendChild(createComment(data));

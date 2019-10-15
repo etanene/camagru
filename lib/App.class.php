@@ -21,7 +21,9 @@ class App {
 			$view = new View($controller->getData(), $view_path);
 			$content = $view->render();
 		} else {
-			throw new Exception('Method' . $controller_method . 'of class' . $controller_class . 'does not exist');
+			header('HTTP/1.1 404 Not Found');
+			include '404.php';
+			exit();
 		}
 		$layout = new View(compact('content'), ROOT . '/views/layout.php');
 		echo $layout->render();

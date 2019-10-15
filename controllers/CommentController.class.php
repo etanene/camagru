@@ -13,6 +13,7 @@ class CommentController extends Controller {
         if (!Session::get('logged')) {
             $resolve['message'] = 'Log in to like or comment photo!';
         } else if ($_POST && isset($_POST['comment']) && isset($_POST['image']) && isset($_POST['user']) && isset($_POST['author'])) {
+            $_POST['comment'] = htmlentities($_POST['comment']);
             $date = new DateTime();
             $this->model->addCommentToImage($_POST['comment'], $_POST['image'], $_POST['user'], $date->format('Y-m-d H:i:s'));
             $resolve['id'] = $this->model->getCommentId($_POST['comment'], $_POST['image'], $_POST['user'], $date->format('Y-m-d H:i:s'))['id'];
@@ -21,6 +22,7 @@ class CommentController extends Controller {
                 $this->sendCommentNotice($author['email'], $_POST['user'], $_POST['author'], $_POST['image']);
             }
             $resolve['date'] = $date->format('Y-m-d H:i:s');
+            $resolve['text'] = $_POST['comment'];
         }
         exit(json_encode($resolve));
     }

@@ -8,6 +8,8 @@ class UserController extends Controller {
 
     public function login() {
         if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
+            $_POST['login'] = htmlentities($_POST['login']);
+            $_POST['password'] = htmlentities($_POST['password']);
             $user = $this->model->getUserByLogin($_POST['login']);
             $resolve = [];
             if (isset($user) && password_verify($_POST['password'], $user['password'])) {
@@ -31,6 +33,9 @@ class UserController extends Controller {
 
     public function register() {
         if ($_POST && isset($_POST['login']) && isset($_POST['password']) && isset($_POST['email'])) {
+            $_POST['login'] = htmlentities($_POST['login']);
+            $_POST['password'] = htmlentities($_POST['password']);
+            $_POST['email'] = htmlentities($_POST['email']);
             $resolve = [];
             if (!$this->validateLogin($_POST['login'])) {
                 $resolve['message'] = 'Invalid login.';
@@ -76,6 +81,7 @@ class UserController extends Controller {
                 App::redirect('/user/resetpw');
             }
         } else if ($_POST && isset($_POST['email'])) {
+            $_POST['email'] = htmlentities($_POST['email']);
             $resolve = [];
             $user = $this->model->getUserByEmail($_POST['email']);
             if (!isset($user)) {
@@ -98,6 +104,7 @@ class UserController extends Controller {
             App::redirect('/user/login');
         }
         if ($_POST && $_POST['password']) {
+            $_POST['password'] = htmlentities($_POST['password']);
             $resolve = [];
             if ($this->validatePassword($_POST['password'])) {
                 $resolve['message'] = 'Invalid password.';
@@ -186,6 +193,9 @@ class UserController extends Controller {
     }
 
     private function changePassword($oldpasswd, $newpasswd, $confirmpasswd) {
+        $oldpasswd = htmlentities($oldpasswd);
+        $newpasswd = htmlentities($newpasswd);
+        $confirmpasswd = htmlentities($confirmpasswd);
         $user = $this->model->getUserByLogin(Session::get('logged'));
         $resolve = [];
         
@@ -208,6 +218,7 @@ class UserController extends Controller {
     }
 
     private function changeEmail($newemail) {
+        $newemail = htmlentities($newemail);
         $resolve = [];
 
         if (!$this->model->getUserByEmail($newemail)) {
@@ -224,6 +235,7 @@ class UserController extends Controller {
     }
 
     private function changeLogin($newLogin) {
+        $newLogin = htmlentities($newLogin);
         $resolve = [];
 
         if (!$this->model->getUserByLogin($newLogin)) {
