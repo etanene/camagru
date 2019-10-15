@@ -1,5 +1,8 @@
 <div id="upload">
-    <div id="select-stick">
+    
+    <div id="get-photo">
+        <div id="get-pic">
+        <div id="select-stick">
         <form id="get-stick">
             <?php if (isset($data['stickers'])) { 
             foreach ($data['stickers'] as $sticker) { ?>
@@ -11,8 +14,6 @@
             } ?>
         </form>
     </div>
-    <div id="get-photo">
-        <div id="get-pic">
             <div id="video-webcam">
                 <video id="webcam" style="width: 480px; height: 360px;" autoplay style="transform: scaleX(-1);"></video>
             </div>

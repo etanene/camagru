@@ -71,8 +71,6 @@
     height: 25px;
     margin: 7px;
     cursor: pointer;
-    flex-grow: 0;
-    flex-shrink: 0;
 }
 
 #user-nav #profile {
