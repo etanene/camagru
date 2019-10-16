@@ -15,14 +15,16 @@
         </form>
     </div>
             <div id="video-webcam">
-                <video id="webcam" style="width: 480px; height: 360px;" autoplay style="transform: scaleX(-1);"></video>
+                <video id="webcam" autoplay style="transform: scaleX(-1);"></video>
             </div>
             <button id="takePhoto" class="submit">
                 Take a photo
             </button>
         </div>
         <div id="preview-pic">
-            <canvas id="photo"></canvas>
+            <div id="photo-preview">
+                <canvas id="photo"></canvas>
+            </div>
             <form enctype="multipart/form-data" id="uploadForm" method="POST" >
                 <input type="submit" name="submit" id="uploadButton" value="Upload" class="submit" />
                 <input type="file" name="image" id="userfile" class="submit" />
@@ -44,8 +46,16 @@
     let uploadStickers = [];
     let blobPhoto;
 
-    canvas.width = video.offsetWidth;
-    canvas.height = video.offsetHeight;
+    console.log(videoBlock.offsetWidth);
+    console.log(videoBlock.offsetHeight);
+    console.log(videoBlock.clientWidth);
+    console.log(videoBlock.clientHeight);
+    console.log(window.getComputedStyle(videoBlock));
+    console.log(window.getComputedStyle(videoBlock).width);
+    console.log(window.getComputedStyle(videoBlock).height);
+
+
+    
 
     fetch('/image/getUserImages/' + user, {
         method: 'GET'
@@ -78,8 +88,10 @@
     });
 
     takePhoto.onclick = () => {
-        context.clearRect(0, 0, 480, 360);
-        context.drawImage(video, 0, 0, 480, 360);
+        canvas.width = videoBlock.offsetWidth;
+        canvas.height = videoBlock.offsetHeight;
+        context.clearRect(0, 0, videoBlock.offsetWidth, videoBlock.offsetHeight);
+        context.drawImage(video, 0, 0, videoBlock.offsetWidth, videoBlock.offsetHeight);
 
         canvas.toBlob((blob) => {
             blobPhoto = blob;
